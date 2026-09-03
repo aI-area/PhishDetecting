@@ -1,0 +1,11 @@
+For training:
+python train.py --data.data_dir "/data/ebbu2017.csv"
+
+
+For testing, please run:
+   
+python test.py \
+  --data.data_dir "/data/verified_Phishtank.csv" \
+  --log.checkpoint_dir "runs/10000/checkpoints/" \
+  --log.output_dir "runs/10000/"
+  
