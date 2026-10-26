@@ -67,12 +67,3 @@ See the [workflow guide](experiments/README.md), [configuration](experiments/LIT
 python -m experiments.validate_public_results --root .
 ```
 
-## Interpretation
-
-SDCS achieves 97.54% mean F1, .746 pairwise Jaccard recurrence, and .034 mean absolute feature correlation in the matched-budget study. MI has slightly higher mean F1; ANOVA-F has higher recurrence. The measured contribution is a joint relevance–stability–redundancy profile, not uniform superiority.
-
-Fixed-threshold focal gains are 4.14–7.10 percentage points over standard LightGBM; validation-selected thresholds and calibration change the comparison. The imbalance ratios alter training prevalence while the test population is fixed.
-
-The complete inference pipeline was evaluated on one TECNO CH6i ARM64 smartphone. LitePhish uses 3.679 ms/URL and 69.02 MiB peak RSS in batch-1 trials. Gross and idle-adjusted battery-side estimates are 6.084 and 2.739 mJ/URL. These onboard fuel-gauge estimates are not externally calibrated meter measurements. MUDS is faster and lower-energy; LitePhish offers higher phishing recall on the common workload. The phone evaluation, x86 runtime profiling, and desktop CPU-package energy measurements are separate protocols.
-
-LitePhish is a first-stage URL screener. These results do not validate unrestricted blocking across heterogeneous browsing populations, browser integration, or performance across all consumer hardware.
