@@ -29,7 +29,7 @@ The four evaluation datasets use `url` and `phishing` columns (`1` = phishing).
 | PhishStorm | 48,009 | 47,902 | 95,911 |
 | PhishTank, external evaluation | 51,453 | 42,335 | 93,788 |
 
-Files are in [`dataset`](dataset). `dataset/Phishtank/PhishTank.csv` is the 93,498-record PhishTank copy used for resource profiling (51,453 benign; 42,045 phishing); the fixed phone workload samples 5,000 rows from it. This is not a fifth independently collected dataset. The two PhishTank copies are not interchangeable: they share 55,620 distinct exact URL/label pairs, and their intervening curation history is unavailable. See [the dataset notes](dataset/README.md).
+Files are in [`dataset`](dataset). PhishTank contains **93,788 URLs** for external evaluation. Phone resource measurements use a fixed **5,000-URL workload** (2,705 benign and 2,295 phishing URLs), retained with the inference bundles. See [the dataset notes](dataset/README.md).
 
 `merged.csv` is the exact URL/label union of PhishFusion, Ebbu2017, and PhishStorm for descriptive keyword analysis only: 125,510 phishing and 130,899 benign URLs. It is not an additional training or test cohort.
 
