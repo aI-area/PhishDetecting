@@ -1,0 +1,34 @@
+{
+  "name": "MUDS",
+  "feature_port": "Original scalar feature definitions with numerical equivalence validation",
+  "retraining": false,
+  "tld_version": "0.13.1",
+  "feature_columns": [
+    "use_of_ip",
+    "abnormal_url",
+    "count.",
+    "count-www",
+    "count@",
+    "count_dir",
+    "count_embed_domian",
+    "short_url",
+    "count-https",
+    "count-http",
+    "count%",
+    "count?",
+    "count-",
+    "count=",
+    "url_length",
+    "hostname_length",
+    "sus_url",
+    "fd_length",
+    "tld_length",
+    "count-digits",
+    "count-letters"
+  ],
+  "estimator": {
+    "kind": "LGBMClassifier"
+  },
+  "source_sha256": "8763575033c77b5429c05e8fa66d75dbd107934228e9210bdbdf441b1135c0ea",
+  "artifact_sha256": "ad688e894f81f0c35072128e08fb641c579bc5a80253b1c465af0d17af0ec863"
+}

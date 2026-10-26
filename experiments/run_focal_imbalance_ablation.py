@@ -145,7 +145,7 @@ def main() -> None:
     if (x_train.shape, x_validation.shape, x_test.shape) != ((len(train_idx), 568), (len(validation_idx), 568), (len(test_idx), 568)):
         raise RuntimeError("compact cache has unexpected shapes")
 
-    # Select only among the author-confirmed PhishFusion candidate pairs, using
+    # Select only among the specified PhishFusion candidate pairs, using
     # threshold-free validation AP. The selected pair is then frozen for every ratio.
     full_scaler = StandardScaler().fit(x_train)
     full_train_scaled = full_scaler.transform(x_train)
@@ -281,7 +281,7 @@ def main() -> None:
                      "selected_indices_sha256": sha256(selected_path), "cache": str(cache_path.resolve()),
                      "cache_sha256": sha256(cache_path), "cache_reused": cache_reused,
                      "feature_extraction_seconds": extraction_seconds},
-        "focal_parameter_selection": {"candidate_source": "author-confirmed PhishFusion ranges",
+        "focal_parameter_selection": {"candidate_source": "specified PhishFusion ranges",
                                       "criterion": "maximum validation average precision; test set untouched",
                                       "candidates": parameter_grid, "selected": {"gamma": gamma, "alpha": alpha}},
         "design": {"ratios": ["natural", "1_to_3", "1_to_5", "1_to_10"],

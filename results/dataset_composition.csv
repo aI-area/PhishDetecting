@@ -1,0 +1,11 @@
+dataset,label,rows,root_domains,with_path,with_query
+PhishFusion.csv,0,52995,2837,52995,2644
+PhishFusion.csv,1,52757,16716,52753,12202
+ebbu2017.csv,0,36400,12704,36400,1465
+ebbu2017.csv,1,37175,8922,36924,7920
+phishstorm.csv,0,48009,17939,48009,2325
+phishstorm.csv,1,47902,18640,47619,15867
+verified_Phishtank.csv,0,51453,18085,49662,5972
+verified_Phishtank.csv,1,42335,4587,41089,7649
+component_union_exact_url,0,130899,31739,130899,6245
+component_union_exact_url,1,125510,44025,125081,33245

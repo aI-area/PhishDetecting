@@ -20,7 +20,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from stealth_features import extract_features_parallel
 
 # Configuration
-DATASET_FILE = "/home/hussain-hu/phishing/github/data/StealthPhisher2025.csv"
+DATASET_FILE = "your_path/StealthPhisher2025.csv"
 CACHE_PATH = "extracted_features.csv"
 MODEL_PATH = "ebbu2017_model.h5"
 SCALER_PATH = "ebbu2017_scaler.pkl"

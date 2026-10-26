@@ -1,0 +1,17 @@
+token,phishing,benign
+.htm,28538,23006
+.html,19145,16439
+.php,32004,2048
+doc,6034,6606
+paypal,9879,20
+cmd,9594,46
+index.php,6414,455
+google,5433,1193
+webscr,6437,2
+wp-content,5882,134
+secure,5603,177
+login,24642,359
+account,6114,324
+verify,1251,5
+update,4386,156
+bank,3423,349

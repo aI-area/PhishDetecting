@@ -1,6 +1,8 @@
 # LitePhish
 
-This repository contains the implementation and evaluation workflows accompanying *LitePhish: Resource-Efficient URL-Intrinsic Phishing Detection for Consumer Electronics*. LitePhish combines 86 URL-intrinsic descriptors, selected character 2-/3-grams, Stability-Driven Composite Selection (SDCS), a focal-loss-inspired LightGBM objective, and SHAP analysis.
+Code, datasets, trained inference components, and evaluation records for **LitePhish: Resource-Efficient URL-Intrinsic Phishing Detection for Consumer Electronics**.
+
+LitePhish combines 86 URL-intrinsic descriptors with selected character 2-/3-grams. Stability-Driven Composite Selection (SDCS) controls feature relevance, recurrence, and redundancy. A focal-loss-inspired LightGBM classifier supports phishing detection without synthetic resampling. The evaluation includes domain-disjoint partitions, four source–target transfers, probability calibration, distribution shift, and physical ARM smartphone measurements.
 
 ![LitePhish framework](model.png)
 
@@ -9,71 +11,68 @@ This repository contains the implementation and evaluation workflows accompanyin
 ```bash
 git clone https://github.com/aI-area/PhishDetecting.git
 cd PhishDetecting
-conda create -n phishing python=3.9
-conda activate phishing
+python -m venv .venv
+# Activate .venv using the command for your operating system.
 pip install -r requirements.txt
 ```
 
-The legacy URLNet baseline requires Python 3.7.12, TensorFlow 1.15.0, NumPy 1.21.6, and tflearn 0.3.2. TensorFlow/Keras baselines use separate compatible environments, as described in [`experiments/README.md`](experiments/README.md).
+The reference classical-model environment uses Python 3.9.20, NumPy 2.0.2, pandas 2.2.3, scikit-learn 1.6.1, SciPy 1.13.1, and LightGBM 4.5.0. Neural baselines and URLNet need separate compatible environments; see [experiments](experiments/README.md).
 
-## Datasets and curation
+## Datasets
 
-CSV files use `url` and binary `phishing` columns, with phishing encoded as 1. The released `dataset/` directory contains:
+The four evaluation datasets use `url` and `phishing` columns (`1` = phishing).
 
-- `PhishFusion.csv`: the curated primary corpus, obtained by combining the stated phishing sources and structurally diverse benign URLs, removing invalid rows and exact duplicates, and retaining URL strings and labels;
-- `phishstorm.csv` and `ebbu2017.csv`: comparison corpora used for internal and source--target evaluation;
-- `PhishTank.csv`: the independently collected PhishTank/Common Crawl external cohort;
-- `merged.csv`: the merged corpus used for the supplementary keyword-frequency analysis.
+| Dataset | Benign | Phishing | Total |
+|---|---:|---:|---:|
+| PhishFusion | 52,995 | 52,757 | 105,752 |
+| Ebbu2017 | 36,400 | 37,175 | 73,575 |
+| PhishStorm | 48,009 | 47,902 | 95,911 |
+| PhishTank, external evaluation | 51,453 | 42,335 | 93,788 |
 
-Effective-second-level-domain-disjoint train/validation/test manifests are generated from each corpus with:
+Files are in [`dataset`](dataset). `dataset/Phishtank/PhishTank.csv` is the 93,498-record PhishTank copy used for resource profiling (51,453 benign; 42,045 phishing); the fixed phone workload samples 5,000 rows from it. This is not a fifth independently collected dataset. The two PhishTank copies are not interchangeable: they share 55,620 distinct exact URL/label pairs, and their intervening curation history is unavailable. See [the dataset notes](dataset/README.md).
 
-```bash
-python -m experiments.create_domain_split_manifest dataset/PhishFusion.csv manifests --name PhishFusion --seed 42
-python -m experiments.create_domain_split_manifest dataset/phishstorm.csv manifests --name PhishStorm --seed 42
-python -m experiments.create_domain_split_manifest dataset/ebbu2017.csv manifests --name Ebbu2017 --seed 42
-```
+`merged.csv` is the exact URL/label union of PhishFusion, Ebbu2017, and PhishStorm for descriptive keyword analysis only: 125,510 phishing and 130,899 benign URLs. It is not an additional training or test cohort.
 
-The generator records row identifiers, labels, split membership, candidate seeds, class counts, effective-domain counts, overlap checks, and SHA-256 hashes. Cross-dataset target cohorts are constructed with [`experiments/create_cross_dataset_transfer_cohort.py`](experiments/create_cross_dataset_transfer_cohort.py), which removes exact source-training/target URL overlap without using target labels for fitting or model selection.
+## Training and inference
 
-## Fixed LitePhish configuration
-
-- Character N-grams: analyzer `char`, range 2--3, `min_df=5`, `max_df=1.0`, variance threshold `1e-5`, MI/L1 weight `beta=0.5`, and top 5,000 candidates. Mutual information uses at most 20,000 source-training observations; L1 logistic ranking uses `C=0.5`.
-- SDCS: 20 stability subsamples, fraction 0.905, L1-logistic inverse-regularization `C=0.191`, stability threshold 0.705, MI weight 0.318, stability weight 0.767, Pearson-correlation threshold 0.956, and maximum 1,000 retained features.
-- Focal settings selected by source-validation phishing-class F1: PhishStorm `(gamma, alpha)=(0.55, 0.90)`, Ebbu2017 `(0.30, 0.95)`, and the primary PhishFusion model `(0.55, 0.95)`.
-- Seeds: 42 for the primary split and paired compactness/resource analyses; 11, 22, 33, 44, 55, 66, 77, 88, 99, and 110 for repeated domain-split analysis; 42--51 for the paired focal-imbalance analysis.
-
-The focal objective, including probability clipping at `1e-15` and the elementwise Hessian floor at `1e-6`, is implemented in `model.py` and in the released experiment runners.
-
-## Reproducing Tables III--IX
-
-The complete argument definitions and output schemas are documented by each command's `--help` option. Run the following entry points from the repository root, supplying dataset, manifest, artifact, baseline, and output paths as indicated:
-
-| Table | Analysis | Commands |
-| --- | --- | --- |
-| III | Domain-disjoint internal comparison | Run the model-specific shared-split modules listed in `experiments/README.md`, then `python -m experiments.evaluate_saved_predictions --help` and `python -m experiments.aggregate_shared_split_metrics --help` |
-| IV | Four source--target transfers | `python -m experiments.create_cross_dataset_transfer_cohort --help`; run the model-specific cross-dataset modules; then `python -m experiments.aggregate_cross_transfer_metrics --help` |
-| V | Paired focal-imbalance analysis | `python -m experiments.run_focal_imbalance_ablation --help`; `python -m experiments.summarize_focal_comparison --help` |
-| VI | Independent external cohort | `python -m experiments.evaluate_saved_predictions --help`; `python -m experiments.evaluate_grambeddings_predictions --help`; `python -m experiments.urlnet_convert_predictions --help` |
-| VII | Common-protocol resource and energy analysis | `python -m experiments.benchmark_model_resources --help`; `python -m experiments.summarize_model_resources`; `python -m experiments.measure_cpu_energy --help` |
-| VIII | Ten-seed stability analysis | `python -m experiments.run_litephish_experiments --experiment repeated_runs --dataset dataset/PhishFusion.csv --seeds 11 22 33 44 55 66 77 88 99 110 --outdir results/repeated_runs` |
-| IX | Raw-versus-compact analysis | `python -m experiments.train_litephish_compactness_pair --help`; `python -m experiments.benchmark_litephish_compactness --help`; `python -m experiments.summarize_litephish_compactness --help` |
-
-Prediction-level inference for Tables III, IV, and VI is obtained with:
+Use your own dataset locations, for example:
 
 ```bash
-python -m experiments.compare_model_predictions <prediction_root> <output_dir> --bootstrap 10000
+python main.py --dataset your_path/PhishFusion.csv
+python test.py your_path/Phishtank/PhishTank.csv --artifacts artifacts/litephish --output local_results/PhishTank_predictions.csv
 ```
 
-This workflow performs exact McNemar tests for accuracy, paired multinomial-bootstrap inference for phishing-class F1, paired DeLong tests for ROC-AUC, and Holm correction within each table and metric family. The analysis covers 72 LitePhish--baseline scenario pairs.
+The saved components in `artifacts/litephish` correspond to the 568-feature PhishFusion representation used in the objective and resource studies. Pickle/joblib files must only be loaded from a trusted source. Feature counts are source- and protocol-dependent, not universal constants. Training a new model does not automatically reproduce a frozen result unless the dataset bytes, row assignments, parameters, and environment also match.
 
-Detailed workflow mappings, environment notes, provenance checks, and baseline-specific entry points are provided in [`experiments/README.md`](experiments/README.md). Supplementary methodology and results are available in [`Supplementary.tex`](Supplementary.tex).
+The canonical PhishFusion partition is [`manifests/PhishFusion.csv`](manifests/PhishFusion.csv): 86,098 training, 8,278 validation, and 11,376 test rows. Its per-row URL hashes bind the assignments to the released source order. Newly generated split manifests are separate partitions unless their row assignments match this manifest.
 
-## Primary pipeline
+## Experiments and results
 
-Set the dataset path in `main.py` to `dataset/PhishFusion.csv`, then run:
+| Main display | Analysis | Public entry points / records |
+|---|---|---|
+| Table II | Dataset composition | `dataset/`, `results/dataset_composition.csv`, `results/union_flow.csv` |
+| Table III | Internal comparisons, including Roy | Shared-split runners; `run_roy_baseline.py`; `results/roy_phishfusion_predictions.csv` |
+| Table IV / Figure 3 | Four transfers | Cross-dataset runners; `results/cross_dataset_roc_points.csv.gz` |
+| Table V | Matched-budget selectors | `compare_feature_selectors.py`; `results/selector_*.csv` |
+| Table VI | Paired focal-objective comparison | `run_focal_imbalance_ablation.py`, `compare_probability_objectives.py`; `results/objective_*` |
+| Table VII | External PhishTank evaluation | Prediction evaluators; `results/roy_external_predictions.csv` |
+| Table VIII | Physical smartphone quality and resources | `experiments/android/`; `results/phone_*.csv` |
+| Table IX | Source-only distribution-shift alternatives | `fit_shift_representations.py`, `evaluate_shift_conditions.py`; `results/distribution_shift_summary.csv` |
+| Figure 5 | Detection–resource frontiers | `summarize_phone_tradeoffs.py`; `results/pareto_*.csv` |
+| Table X | Paired raw/compact representations | Compactness runners; `results/compactness_resources.csv` |
+
+See the [workflow guide](experiments/README.md), [configuration](experiments/LITEPHISH_CONFIGURATION.md), and [results map](experiments/RESULTS_REPRODUCTION_MAP.md) for exact scopes and commands. A lightweight independent check of the retained CSV/NPZ records is available with:
 
 ```bash
-python main.py
+python -m experiments.validate_public_results --root .
 ```
 
-The pipeline fits all representations and selectors on training data only and stores the trained inference artifacts in `artifacts/`.
+## Interpretation
+
+SDCS achieves 97.54% mean F1, .746 pairwise Jaccard recurrence, and .034 mean absolute feature correlation in the matched-budget study. MI has slightly higher mean F1; ANOVA-F has higher recurrence. The measured contribution is a joint relevance–stability–redundancy profile, not uniform superiority.
+
+Fixed-threshold focal gains are 4.14–7.10 percentage points over standard LightGBM; validation-selected thresholds and calibration change the comparison. The imbalance ratios alter training prevalence while the test population is fixed.
+
+The complete inference pipeline was evaluated on one TECNO CH6i ARM64 smartphone. LitePhish uses 3.679 ms/URL and 69.02 MiB peak RSS in batch-1 trials. Gross and idle-adjusted battery-side estimates are 6.084 and 2.739 mJ/URL. These onboard fuel-gauge estimates are not externally calibrated meter measurements. MUDS is faster and lower-energy; LitePhish offers higher phishing recall on the common workload. The phone evaluation, x86 runtime profiling, and desktop CPU-package energy measurements are separate protocols.
+
+LitePhish is a first-stage URL screener. These results do not validate unrestricted blocking across heterogeneous browsing populations, browser integration, or performance across all consumer hardware.

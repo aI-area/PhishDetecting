@@ -18,7 +18,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from stealth_features import extract_features_parallel
 
 # Configuration
-DATASET_FILE = "/home/hussain-hu/phishing/github/data/PhishFusion.csv"
+DATASET_FILE = "your_path/PhishFusion.csv"
 CACHE_PATH = "PhishFusion_extracted_features.csv" # The file causing the issue
 MODEL_PATH = "PhishFusion_model.h5"
 SCALER_PATH = "PhishFusion_scaler.pkl"

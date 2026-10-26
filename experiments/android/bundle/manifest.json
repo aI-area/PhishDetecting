@@ -1,0 +1,15 @@
+{
+  "dataset_sha256": "925bab1b18e59bdf6bca803b8e559fc1f99593124ec546e9b1c6d779142cf356",
+  "cohort_row_id_sha256": "66fcfd4badd3d32a5aa54555d68a912c9130f4edebc618e1ede0e150d365dd79",
+  "cohort_size": 5000,
+  "purpose": "Physical ARM inference equivalence and resource evaluation",
+  "retraining": false,
+  "threshold": 0.5,
+  "source_hashes": {
+    "artifacts PhishFusion/selected_features.pkl": "cbc27d6c02a087847e9f40aef3ec6e67ee19ad4735401e6783b06ec973447fae",
+    "artifacts PhishFusion/scaler.pkl": "391416636edbf5fc1268450eb66f62224ed9b54c862af28da7e11040ea4652e0",
+    "artifacts PhishFusion/ngram_processor.pkl": "c2e1d3c4fa02fc9fe334235f24de4890ad1eba102bddad52f7fa30c447e70f39",
+    "artifacts PhishFusion/all_feature_names.pkl": "c4563450c5a155e9f2c3b5ca1020313ac7f4ce012ccfedd62cd4a1db8566ec5a",
+    "artifacts PhishFusion/model.pkl": "aa0f47ac1481cb71e585ba62f16bee6576a7683880147223deecd099ecf6d3eb"
+  }
+}

@@ -52,7 +52,7 @@ class PhishingDetector:
         self.predictions_to_save = None
         self.selected_features_indices_to_save = None
 
-    def load_data(self, file_path="data/PhishFusion.csv"):
+    def load_data(self, file_path="your_path/PhishFusion.csv"):
          """Load the dataset."""
          try:
              self.logger.info("Loading dataset")
@@ -211,11 +211,11 @@ class PhishingDetector:
         except Exception as e:
             self.logger.error(f"Hard negative analysis failed: {e}")
 
-    def run_pipeline(self):
+    def run_pipeline(self, dataset="your_path/PhishFusion.csv"):
         """Execute the phishing detection pipeline."""
         try:
             self.logger.info("Starting pipeline")
-            urls, labels = self.load_data()
+            urls, labels = self.load_data(dataset)
             if urls.empty:
                 raise ValueError("No data loaded")
 
@@ -414,6 +414,7 @@ class PhishingDetector:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Phishing detection pipeline")
+    parser.add_argument("--dataset", default="your_path/PhishFusion.csv", help="CSV with url and phishing columns")
     args = parser.parse_args()
     detector = PhishingDetector()
-    detector.run_pipeline()
+    detector.run_pipeline(args.dataset)

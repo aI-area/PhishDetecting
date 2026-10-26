@@ -1,1 +1,10 @@
-
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+*.log
+events.out.tfevents.*
+Baselines/**/outputs/
+local_results/
+*.tmp

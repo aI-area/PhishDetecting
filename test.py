@@ -154,7 +154,7 @@ class PhishingTester:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Test Phishing Model on New Data")
   
-    parser.add_argument("csv_path", nargs='?', default="/data/PhishTank.csv", help="Path to CSV dataset")
+    parser.add_argument("csv_path", nargs='?', default="your_path/Phishtank/PhishTank.csv", help="Path to CSV dataset")
     parser.add_argument("--artifacts", default="artifacts", help="Path to saved artifacts folder") # change for particular dataset to test on already trained model, e.g, artifacts PhishFusion
     parser.add_argument("--output", default="PhishTank_test_results.csv", help="Path to save output CSV")
     

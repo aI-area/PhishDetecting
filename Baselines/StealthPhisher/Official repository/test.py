@@ -6,14 +6,14 @@ import joblib
 import json
 import os
 import time
-from sklearn.metrics import (accuracy_score, precision_score, recall_score, 
-                             f1_score, matthews_corrcoef, roc_auc_score, 
+from sklearn.metrics import (accuracy_score, precision_score, recall_score,
+                             f1_score, matthews_corrcoef, roc_auc_score,
                              confusion_matrix)
 from stealth_features import extract_features_parallel
 
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 # Configuration
-TEST_DATASET = "/home/hussain-hu/phishing/github/data/PhishFusion.csv" 
+TEST_DATASET = "your_path/PhishFusion.csv"
 MODEL_PATH = "ebbu2017_model.h5"
 SCALER_PATH = "ebbu2017_scaler.pkl"
 FEATURES_PATH = "ebbu2017_selected_features.json"
@@ -29,7 +29,7 @@ def calculate_metrics(y_true, y_pred, y_prob):
     rec = recall_score(y_true, y_pred, zero_division=0)
     f1 = f1_score(y_true, y_pred, zero_division=0)
     mcc = matthews_corrcoef(y_true, y_pred)
-    
+
     try:
         auc = roc_auc_score(y_true, y_prob)
     except:
@@ -37,13 +37,13 @@ def calculate_metrics(y_true, y_pred, y_prob):
 
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
     specificity = tn / (tn + fp) if (tn + fp) > 0 else 0
-    
+
     # Markedness formula from StealthPhisher paper
     if (tp + fn) > 0 and (fn + tp) > 0:
         markedness = (prec * (tp / (tp + fn))) - ((1 - prec) * (fn / (fn + tp)))
     else:
         markedness = 0.0
-        
+
     youdens_j = rec + specificity - 1
     fmi = np.sqrt(prec * rec)
 
@@ -65,7 +65,7 @@ def calculate_metrics(y_true, y_pred, y_prob):
 
 def main():
     log("--- StealthPhisher Inference ---")
-    
+
     if not os.path.exists(MODEL_PATH):
         log(f"Error: Model not found at {MODEL_PATH}")
         return
@@ -82,17 +82,17 @@ def main():
         log(f"Loading dataset: {TEST_DATASET}")
         raw_df = pd.read_csv(TEST_DATASET)
         log(f"Loaded {len(raw_df)} URLs for testing.")
-        
+
         # Robust column detection (lowercase to match)
         raw_df.columns = [c.lower() for c in raw_df.columns]
         url_col = next((c for c in raw_df.columns if 'url' in c), None)
-        
+
         if not url_col:
             log("Error: No 'url' column found in test CSV.")
             return
-            
+
         raw_df.rename(columns={url_col: 'url'}, inplace=True)
-            
+
     except Exception as e:
         log(f"Error loading data: {e}")
         return
@@ -106,7 +106,7 @@ def main():
     for col in selected_features:
         if col not in df.columns:
             df[col] = 0
-            
+
     X_test = df[selected_features].values
     X_test_scaled = scaler.transform(X_test)
 
@@ -120,5 +120,5 @@ def main():
     df['Confidence'] = y_pred_prob
     df['Label_Pred'] = np.where(y_pred == 1, 'Phishing', 'Benign')
     df.to_csv(OUTPUT_FILE, index=False)
-    
+
     # 7. Calculate Metrics (if gro

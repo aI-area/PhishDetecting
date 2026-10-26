@@ -10,3 +10,6 @@
 *.npz -text
 *.pkl -text
 *.pdf -text
+results/** -text
+experiments/android/bundle/** -text
+experiments/android/baseline_bundles/** -text

@@ -1,7 +1,11 @@
 \documentclass[10pt]{article}
 \usepackage[a4paper,margin=1.55cm]{geometry}
-\usepackage{booktabs,longtable,array,graphicx,xcolor,caption,amsmath,multirow}
+\usepackage{booktabs,longtable,array,graphicx,xcolor,caption,amsmath,amsfonts,multirow,adjustbox}
 \graphicspath{{image/}}
+\definecolor{bodycolor}{rgb}{0,0,0}
+\usepackage[ruled,vlined]{algorithm2e}
+\newcommand{\blue}[1]{{\color{blue}#1}}
+\newenvironment{bluechange}{\color{blue}}{}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{4pt}
@@ -9,8 +13,8 @@
 
 \begin{document}
 \begin{center}
-{\Large\bfseries Supplementary Material}\\[3pt]
-{\large LitePhish: Resource-Efficient URL-Intrinsic Phishing Detection for Consumer Electronics}
+{\Large\bfseries Supplementary Material}\\[20pt]
+{\large\color{bodycolor} LitePhish: Resource-Efficient URL-Intrinsic Phishing Detection for Consumer Electronics}
 \end{center}
 
 \color{black}
@@ -122,22 +126,24 @@ Table~\ref{tab:features} defines the 86 handcrafted descriptors. Ratio denominat
 \end{longtable}
 \normalsize
 
-
+\color{bodycolor}
 \section{Training-Only Parameter Selection}
 
-All representation fitting uses the source training partition, while hyperparameter selection uses only the source training and validation partitions. Validation phishing-class F1 selects $(\gamma,\alpha)=(0.55,0.90)$ for PhishStorm-source transfer and $(0.55,0.95)$ for the primary PhishFusion model; the Ebbu2017-source setting is $(0.30,0.95)$. Target-dataset labels are not used for feature selection, model selection, or fitting. The PhishFusion primary model uses 568 selected features; source-specific cross-dataset models retain 939 features for PhishStorm and 821 for Ebbu2017.
+All representation fitting uses the source training partition, while hyperparameter selection uses only the source training and validation partitions. Validation phishing-class F1 selects \((\gamma,\alpha)=(0.55,0.90)\) when training LitePhish on PhishStorm, \((0.30,0.95)\) when training on Ebbu2017, and \((0.55,0.95)\) when training on PhishFusion. Target-dataset labels are not used for feature selection, model selection, or fitting. LitePhish retains 568 selected features when trained on PhishFusion; the source-specific cross-dataset configurations retain 939 features for PhishStorm and 821 for Ebbu2017.
 
-Character 2-/3-gram selection uses $df_{\min}=5$, $df_{\max}=1.0$, variance threshold $\tau=10^{-5}$, composite weight $\beta=0.5$, and $K_{\mathrm{ng}}=5{,}000$. SDCS uses $S=20$ subsamples, a subsampling fraction of 0.905, L1-logistic inverse-regularization $C=0.191$, $\tau_{\mathrm{stab}}=0.705$, $w_m=0.318$, $w_s=0.767$, $\rho_{\max}=0.956$, and $K=1{,}000$. Mutual information is estimated from at most 20,000 source-training observations.
+Character 2-/3-gram selection uses \(d_{\min}=5\), \(r_{\max}=1.0\), variance threshold \(\tau=10^{-5}\), composite weight \(\beta=0.5\), L1-logistic inverse-regularization \(C_{\mathrm{ng}}=0.5\), and \(K_{\mathrm{ng}}=5,000\). SDCS uses \(S=20\) subsamples, a subsampling fraction of 0.905, L1-logistic inverse-regularization \(C_{\mathrm{SDCS}}=0.191\), coefficient-selection threshold \(|w_j|>10^{-5}\), \(\tau_{\mathrm{stab}}=0.705\), \(w_m=0.318\), \(w_s=0.767\), \(\rho_{\max}=0.956\), and \(K=1,000\). Mutual information is estimated from at most 20,000 source-training observations.
+
+\paragraph{Roy comparator.} \blue{The empirical comparator implements the all-manual-feature Random Forest configuration in Table II of Roy et al., rather than their separate TF--IDF configuration. Its 17 published URL descriptors are classified by 100 trees with seed 42. Standard RF settings and a fixed shortener-domain list specify implementation details not provided in that study. Comparisons therefore concern this published manual-feature configuration under the common evaluation protocol.}
 
 \section{Detailed Ablation Results}
 
 \subsection{Complete SDCS procedure}
 
-Given the training-only feature pool $F_{\mathrm{all}}$, labels $Y$, stability iterations $S$, regularization $\lambda$, stability threshold $\tau_{\mathrm{stab}}$, weights $(w_m,w_s)$, redundancy threshold $\rho_{\max}$, and selection limit $K$, SDCS performs the following operations:
+Given the training-only feature pool $F_{\mathrm{all}}$, labels $Y$, stability iterations $S$, inverse-regularization $C_{\mathrm{SDCS}}=0.191$, stability threshold $\tau_{\mathrm{stab}}$, weights $(w_m,w_s)$, redundancy threshold $\rho_{\max}$, and selection limit $K$, SDCS performs the following operations:
 \begin{enumerate}
-\item Draw $S$ randomized training subsamples, fit L1-regularized logistic regression to each, and compute the nonzero-coefficient selection frequency $\operatorname{Stab}(f)$ for every feature.
+\item Draw $S$ randomized training subsamples, fit L1-regularized logistic regression to each, and compute the selection frequency $\operatorname{Stab}(f)$ for every feature using coefficients satisfying $|w_j|>10^{-5}$.
 \item Retain $F_{\mathrm{stable}}=\{f:\operatorname{Stab}(f)\geq\tau_{\mathrm{stab}}\}$.
-\item Compute normalized mutual information and XGBoost gain on $F_{\mathrm{stable}}$, and combine them as $\operatorname{HIScore}(f)=w_m\operatorname{Imp}_{\mathrm{mi}}(f)+(1-w_m)\operatorname{Imp}_{\mathrm{gbt}}(f)$.
+\item Compute normalized mutual information and \blue{LightGBM gain} on $F_{\mathrm{stable}}$, and combine them as $\operatorname{HIScore}(f)=w_m\operatorname{Imp}_{\mathrm{mi}}(f)+(1-w_m)\operatorname{Imp}_{\mathrm{gbt}}(f)$.
 \item Rank features by $C(f)=w_s\operatorname{Stab}(f)+(1-w_s)\operatorname{HIScore}(f)$.
 \item Traverse the ranking and retain a feature only when its absolute Pearson correlation with every previously retained feature is below $\rho_{\max}$; stop when $K$ features have been retained or the ranking is exhausted.
 \end{enumerate}
@@ -157,48 +163,30 @@ Standard LGBM, $F_{\mathrm{hc}}$+SDCS & 89.28 & 98.54 & 79.90 & 88.24 & 99.11 & 
 \end{tabular}
 \end{table}
 
-\begin{table}[ht]
-\centering
-\caption{Component-level SDCS ablation on PhishFusion. Metrics are percentages.}
-\label{tab:sdcs_component}
-\begin{tabular}{lrrrrr}
-\toprule
-Variant & Acc. & Prec. & Rec. & F1 & AUC \\
-\midrule
-MI only & 96.42 & 97.36 & 96.11 & 96.72 & 99.52 \\
-Gain only & 96.70 & 97.51 & 96.40 & 96.96 & 99.57 \\
-Stability only & 96.25 & 97.08 & 96.04 & 96.56 & 99.46 \\
-MI + gain & 96.95 & 97.73 & 96.72 & 97.22 & 99.65 \\
-SDCS without correlation pruning & 97.20 & 97.91 & 96.98 & 97.44 & 99.70 \\
-Full SDCS & 97.51 & 98.11 & 97.33 & 97.72 & 99.75 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
 For the seed-42 PhishFusion paired analysis, the raw 56,601-feature representation and the 568-feature compact representation were evaluated under an identical one-core/512~MiB protocol. Table~\ref{tab:compact} separates the effects of feature selection on predictive performance, fitting time, storage, memory, and inference latency.
 
-{
-The component ablation in Table~\ref{tab:sdcs_component} yields 97.51\% accuracy and 97.72\% F1 for Full SDCS. A fixed-seed paired experiment evaluates representation compactness using seed 42, identical domain-disjoint partitions, focal parameters, and LightGBM hyperparameters for the raw and compact models. Selection increases accuracy from 97.47\% to 97.72\%, recall from 96.73\% to 97.45\%, F1-score from 97.70\% to 97.94\%, and ROC-AUC from 99.73\% to 99.77\%, while precision changes from 98.69\% to 98.44\%. Model-fitting time decreases from 70.31 to 15.43~s, a 78.1\% reduction (4.56$\times$). The component ablation evaluates the SDCS stages, whereas the paired experiment evaluates reduction of the complete representation.
+{\color{bodycolor}
+A fixed-seed paired experiment evaluates representation compactness using seed 42, identical domain-disjoint partitions, focal parameters, and LightGBM hyperparameters for the raw and compact models. Selection increases accuracy from 97.47\% to 97.72\%, recall from 96.73\% to 97.45\%, F1-score from 97.70\% to 97.94\%, and ROC-AUC from 99.73\% to 99.77\%, while precision changes from 98.69\% to 98.44\%. Model-fitting time decreases from 70.31 to 15.43~s, a 78.1\% reduction (4.56$\times$).
 }
 
 \begin{table}[ht]
 \centering
-\caption{{Direct resource and model-fitting comparison of raw and compact LitePhish representations. FE denotes URL-to-feature extraction; Total includes FE, preprocessing, and prediction. Inference values are medians over four independent profiling passes.}}
+\caption{{\color{bodycolor}Direct resource and model-fitting comparison of raw and compact LitePhish representations. FE denotes URL-to-feature extraction; Total includes FE, preprocessing, and prediction. Inference values are medians over four independent profiling passes.}}
 \label{tab:compact}
 \small
 \resizebox{\textwidth}{!}{\begin{tabular}{llrrrrrrr}
 \toprule
-Representation & Profile & Features & Bundle (MB) & {Fit (s)} & Peak RSS (MiB) & {FE (ms/URL)} & Total (ms/URL) & URL/s \\
+Representation & Profile & Features & Bundle (MB) & {\color{bodycolor}Fit (s)} & Peak RSS (MiB) & {\color{bodycolor}FE (ms/URL)} & Total (ms/URL) & URL/s \\
 \midrule
-Raw & Online & 56,601 & 4.385 & {70.31} & 232.76 & {1.233} & 3.188 & 313.7 \\
-Raw & Batched & 56,601 & 4.385 & {--} & 232.36 & {0.944} & 1.001 & 999.4 \\
-Compact & Online & 568 & 1.874 & {15.43} & 227.25 & {2.129} & 3.805 & 262.8 \\
-Compact & Batched & 568 & 1.874 & {--} & 227.67 & {0.933} & 1.008 & 991.9 \\
+Raw & Online & 56,601 & 4.385 & {\color{bodycolor}70.31} & 232.76 & {\color{bodycolor}1.233} & 3.188 & 313.7 \\
+Raw & Batched & 56,601 & 4.385 & {\color{bodycolor}--} & 232.36 & {\color{bodycolor}0.944} & 1.001 & 999.4 \\
+Compact & Online & 568 & 1.874 & {\color{bodycolor}15.43} & 227.25 & {\color{bodycolor}2.129} & 3.805 & 262.8 \\
+Compact & Batched & 568 & 1.874 & {\color{bodycolor}--} & 227.67 & {\color{bodycolor}0.933} & 1.008 & 991.9 \\
 \bottomrule
 \end{tabular}}
 \end{table}
 
-{Resource values in Table~\ref{tab:compact} are medians across four profiling passes for the raw and compact models. The five-model benchmark in the main article reports means across three passes. Because the model representations, timing boundaries, and aggregation differ, the values are compared within each protocol.}
+{\color{bodycolor}Resource values in Table~\ref{tab:compact} are medians across four profiling passes for the raw and compact models. The five-model benchmark in the main manuscript reports means across three passes. Because the model representations, timing boundaries, and aggregation differ, the values are compared within each protocol.}
 
 \section{Imbalance-Objective Analysis}
 
@@ -227,7 +215,7 @@ Ratio & Threshold & Baseline & Focal F1 & Baseline F1 & Difference (95\% CI) & H
 
 \section{Temporal and Failure-Case Evaluation}
 
-The prospective temporal cohort contains 290 confirmed OpenPhish URLs collected after the training cutoff. Because it contains no benign examples, only recall and score distributions are identifiable. LitePhish detects 256 URLs and misses 34, giving 88.28\% recall (Wilson 95\% CI: 84.06--91.49\%). The mean and median phishing probabilities are 0.868 and 0.996, respectively. The {time-indexed PhishFusion model} obtains 97.45\% recall on its internal positive test subset, which provides the in-distribution reference. {Failure-stratum and counterfactual analyses use a separate seed-42 domain-disjoint model with 96.76\% phishing recall; each reference value is therefore interpreted within its own analysis.}
+The prospective temporal cohort contains 290 confirmed OpenPhish URLs collected after the training cutoff. Because it contains no benign examples, only recall and score distributions are identifiable. LitePhish detects 256 URLs and misses 34, giving 88.28\% recall (Wilson 95\% CI: 84.06--91.49\%). The mean and median phishing probabilities are 0.868 and 0.996, respectively. The time-indexed LitePhish model trained on PhishFusion obtains 97.45\% recall on its internal positive test subset, which provides the in-distribution reference. {\color{bodycolor}Failure-stratum and counterfactual analyses use a separate seed-42 domain-disjoint model with 96.76\% phishing recall; each reference value is therefore interpreted within its own analysis.}
 
 \begin{table}[ht]
 \centering
@@ -249,7 +237,7 @@ Clean-looking & Benign & 817 & 54 & .0661 (.0510,.0852) \\
 
 Counterfactual transformations probe sensitivity while preserving the original labels. A shortening-service proxy reduces recall from 0.9676 to 0.5535; clean-surface transformation reduces it to 0.7968; a reputable-host proxy reduces it to 0.9492; masking brand tokens in 1,035 applicable URLs reduces recall from 0.8850 to 0.8725. Separator obfuscation leaves recall unchanged within its paired interval, whereas percent-encoding the path slightly increases recall. These transformations do not resolve live redirects or establish the behavior of a complete browser navigation chain; they isolate lexical sensitivity.
 
-The popular-DNS stress cohort retains 89,937 names from the top 100,000 Umbrella ranks after exclusion of effective domains associated with known phishing samples. These are popularity-based likely-benign proxies rather than individually verified benign browser visits. At threshold 0.5, 74,175 names are labeled phishing, giving an 82.47\% false-positive rate (Wilson 95\% CI: 82.22--82.72\%). This rate indicates that bare DNS-name inputs require deployment-specific normalization and threshold validation.
+The popular-DNS stress cohort retains 89,937 names from the top 100,000 Umbrella ranks after exclusion of effective domains associated with known phishing samples. \blue{Each input is an HTTPS homepage URL constructed from a popular DNS name. These are popularity-based proxies, not individually verified benign browser visits.} At threshold 0.5, 74,175 names are labeled phishing, giving an 82.47\% proxy flag rate (Wilson 95\% CI: 82.22--82.72\%). \blue{This rate characterizes sensitivity to a homepage-dominated URL population; it is not a verified benign-navigation false-positive rate.}
 
 \section{Resource and Energy Measurement}
 
@@ -273,15 +261,15 @@ Ebbu & 341.097 & 265.986--416.209 & 2.93 \\
 \end{tabular}
 \end{table}
 
-MUDS is 2.91 times more energy efficient than LitePhish and also has the smallest inference bundle. LitePhish attains higher phishing-class F1 under domain-stratified, cross-dataset, and external evaluations. Relative to E2Phish, TabNet, and Ebbu, LitePhish reduces CPU-package energy per URL by 84.5\%, 92.2\%, and 97.9\%, respectively. These findings characterize a multi-objective accuracy--storage--latency--energy trade-off.
+MUDS has 2.91 times the CPU-package URLs/J of LitePhish and also has the smallest inference bundle. LitePhish attains higher phishing-class F1 under domain-stratified, cross-dataset, and external evaluations. Relative to E2Phish, TabNet, and Ebbu, LitePhish reduces CPU-package energy per URL by 84.5\%, 92.2\%, and 97.9\%, respectively. These findings characterize a multi-objective accuracy--storage--latency--energy trade-off.
 
 \section{Paired Statistical Comparisons}
 
-Prediction-level comparisons span the three internal domain-disjoint datasets, four cross-dataset transfers, and the external cohort. Accuracy differences use exact McNemar tests and paired multinomial-bootstrap intervals; phishing-class F1 uses paired multinomial bootstrap; ROC-AUC uses paired DeLong tests. Holm correction is applied within each table and metric family, yielding 72 LitePhish--baseline comparisons. On the external {93,788-URL cohort (42,335 phishing and 51,453 benign)}, LitePhish exceeds all nine baselines in accuracy, phishing-class F1, and ROC-AUC after Holm correction. {The direction and significance of differences vary across individual metrics and source--target settings. LitePhish obtains the highest phishing-class F1 in all four transfers, whereas DEPHIDES and URLNet obtain the highest ROC-AUC in the two Ebbu2017-source transfers; the interpretation therefore distinguishes F1 performance from ranking performance.}
+Prediction-level comparisons span the three internal domain-disjoint datasets, four cross-dataset transfers, and the external cohort. Accuracy differences use exact McNemar tests and paired multinomial-bootstrap intervals; phishing-class F1 uses paired multinomial bootstrap; ROC-AUC uses paired DeLong tests. Holm correction is applied within each table and metric family. The analysis covers 72 LitePhish--baseline scenario pairs, excluding the separately reported Roy comparator. On the external {\color{bodycolor}93,788-URL cohort (42,335 phishing and 51,453 benign)}, LitePhish exceeds all nine baselines in accuracy, phishing-class F1, and ROC-AUC after Holm correction. {\color{bodycolor}The direction and significance of differences vary across individual metrics and source--target settings. LitePhish obtains the highest phishing-class F1 in all four transfers, whereas DEPHIDES and URLNet obtain the highest ROC-AUC in the two Ebbu2017-source transfers; the interpretation therefore distinguishes F1 performance from ranking performance.}
 
 \section{Merged-Corpus Keyword Analysis}
 
-The merged descriptive corpus combines PhishFusion, Ebbu2017, and PhishStorm for an aggregate analysis of URL-token distributions. It contains 126,387 phishing URLs and 130,899 benign URLs, spanning 44,389 and 31,746 unique root domains, respectively. Table~\ref{tab:merged_interpretability} summarizes its composition.
+The merged descriptive corpus combines PhishFusion, Ebbu2017, and PhishStorm for an aggregate analysis of URL-token distributions. \blue{Exact URL/label de-duplication of the three component corpora yields 125,510 phishing and 130,899 benign URLs, spanning 44,025 and 31,739 root domains, respectively. Root domains use the same offline ICANN Public Suffix List for every component and its union. Exact duplicates are removed without case-folding or URL rewriting; the component pool contains no exact-URL label conflicts.} Table~\ref{tab:merged_interpretability} summarizes its composition.
 
 \begin{table}[ht]
 \centering
@@ -292,13 +280,13 @@ The merged descriptive corpus combines PhishFusion, Ebbu2017, and PhishStorm for
 \toprule
 Dataset & Label & URLs & Root domains & With path & With query \\
 \midrule
-Merged & Phishing & 126,387 & 44,389 & 120,855 & 33,258 \\
-       & Benign   & 130,899 & 31,746 & 129,242 & 6,245 \\
+Merged & Phishing & \blue{125,510} & \blue{44,025} & \blue{125,081} & \blue{33,245} \\
+       & Benign   & 130,899 & \blue{31,739} & \blue{130,899} & 6,245 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:merged_landscape} summarizes frequent lexical and domain-related tokens in the phishing subset. The lexical view contains file extensions, hosting terms, authentication-related expressions, and brand-associated terms. The domain view contains public suffixes and hosting-domain fragments. These visualizations characterize the observed corpus composition and are not domain-reputation scores.
+Figure~\ref{fig:merged_landscape} summarizes frequent lexical and domain-related tokens in the phishing subset. \blue{The lexical view counts URLs containing selected technical, authentication, and brand-associated tokens. The domain view counts phishing URLs by registrable root domain.} These visualizations characterize the observed corpus composition and are not domain-reputation scores.
 
 \begin{figure}[ht]
 \centering
@@ -310,13 +298,13 @@ Figure~\ref{fig:merged_landscape} summarizes frequent lexical and domain-related
 \begin{minipage}[t]{0.49\textwidth}
 \centering
 \includegraphics[width=\linewidth]{Merged_Domain_Suffix_Tokens}
-\\[-2pt]\small (b) Frequent domain and suffix tokens
+\\[-2pt]\small (b) Frequent root domains
 \end{minipage}
-\caption{Descriptive token landscape of phishing URLs in the merged corpus. Text size represents relative occurrence frequency within each visualization.}
+\caption{Descriptive token landscape of phishing URLs in the merged corpus. \blue{Bar lengths represent URL occurrence counts within each view.}}
 \label{fig:merged_landscape}
 \end{figure}
 
-Figure~\ref{fig:merged_keywords} compares class-conditional occurrence counts for prominent URL tokens. Technical suffixes such as \texttt{.html} and \texttt{.htm} occur frequently in both classes, whereas \texttt{.php} and several impersonation-related tokens, including \texttt{paypal}, \texttt{google}, and \texttt{secure}, show substantially higher counts in the phishing subset. The class contrast provides corpus-level context for the model-based SHAP findings, without treating any single token as sufficient evidence of phishing.
+\blue{Figure~\ref{fig:merged_keywords} compares class-conditional URL counts for a fixed token list. A URL contributes at most once per token and may contain multiple listed tokens. These descriptive counts reflect collection sources and lexical composition; they are not the labels or importance scores of the fitted detector.}
 
 \begin{center}
 \centering
@@ -325,12 +313,356 @@ Figure~\ref{fig:merged_keywords} compares class-conditional occurrence counts fo
 \label{fig:merged_keywords}
 \end{center}
 
+\begin{bluechange}
+The phishing root-domain union (44,025) is smaller than the component sum (16,716+8,922+18,640=44,278); the benign union (31,739) is smaller than 2,837+12,704+17,939=33,480. Cross-corpus repetition therefore cannot increase either class-specific domain count. Parsed path counts include the root path ``/''. The external 93,788-URL PhishTank/Common Crawl cohort is excluded from this descriptive development-corpus union.
+\end{bluechange}
+\begin{table}[ht]
+\centering\color{blue}\small
+\caption{Component-to-union accounting for descriptive keyword analysis. Removal counts denote duplicate occurrences, not distinct campaigns.}
+\label{tab:corpus_flow}
+\begin{tabular}{lrrrr}
+\toprule
+Class & Component rows & Repeated occurrences removed & Union rows & Conflicts \\
+\midrule
+Benign & 137,404 & 6,505 & 130,899 & 0 \\
+Phishing & 137,834 & 12,324 & 125,510 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{Interpretability Scope}
 
-The keyword-frequency, suffix, and SHAP summaries characterize associations within the observed data. They do not establish causal effects or guarantee that a token will retain the same direction under distribution shift. In particular, brand terms, shared-hosting patterns, and technical suffixes also occur in benign URLs. The high false-positive rate on the popular-DNS proxy and the counterfactual host transformations demonstrate why these features must be interpreted jointly rather than as deterministic indicators.
+The keyword-frequency, suffix, and SHAP summaries characterize associations within the observed data. They do not establish causal effects or guarantee that a token will retain the same direction under distribution shift. In particular, brand terms, shared-hosting patterns, and technical suffixes also occur in benign URLs. The high flag rate on the popular-DNS proxy and the counterfactual host transformations demonstrate why these features must be interpreted jointly rather than as deterministic indicators.
 
-\section{Scope and Limitations of Resource Measurements}
+\section{Scope of Physical-Device Measurements}
+\begin{bluechange}
+The physical evaluation uses one TECNO CH6i ARM64 smartphone running Android 13. It measures complete URL-to-prediction latency, process RSS, numerical agreement, and battery-side energy estimates for six models. It does not measure a browser extension, an automated warning policy, Raspberry Pi gateways, microcontrollers, or longitudinal consumer use. Repetition on one handset describes within-device variability, not device-to-device generalization. The original x86 latency, x86 CPU-package energy, and phone battery-side estimates are separate measurements with different hardware and boundaries.
+\end{bluechange}
 
-{The study measures inference-bundle size, feature-construction cost, latency, peak RAM, constrained one-core execution, and CPU-package energy. These quantities characterize computational feasibility on the evaluated x86-64 systems. No physical Raspberry Pi, smartphone, ARM gateway, or microcontroller is evaluated; architecture-specific latency, thermal behavior, battery consumption, and whole-device energy therefore remain unquantified. Device-level performance requires direct measurement on the intended hardware.}
+\section{Representation and Training Procedures}
+\begin{bluechange}
+The N-gram scorer combines normalized mutual information of observed count variables with absolute L1-logistic coefficients. The generic penalized loss is
+\[
+\min_{w,b}-N^{-1}\sum_i[y_i\log\sigma(w^Tx_i+b)+(1-y_i)\log(1-\sigma(w^Tx_i+b))]+\lambda\|w\|_1.
+\]
+The N-gram scorer uses liblinear $C_{\mathrm{ng}}=.5$; the SDCS recurrence models use $C_{\mathrm{SDCS}}=.191$. These inverse-regularization parameters specify their respective estimators; $\lambda$ denotes a generic penalty coefficient rather than a numerical conversion between estimator conventions. Each normalized score divides by the maximum over the candidate pool.
+\begin{algorithm}[!t]
+\footnotesize
+\caption{N-gram Feature Selection}
+\label{alg:ngram}
+\DontPrintSemicolon
+\SetKwInOut{KwData}{Input}
+\SetKwInOut{KwResult}{Output}
+
+\KwData{Training corpus $\mathcal{D}$ with labels $Y$, minimum document count $d_{\min}$ and maximum document-frequency fraction $r_{\max}$, variance threshold $\tau$, inverse-regularization $C_{\mathrm{ng}}$, weighting factor $\beta$, top-$K_{\text{ng}}$ limit}
+\KwResult{Selected n-gram subset $F_{\text{ng}}^{\text{sel}}$}
+
+\emph{\textbf{\# N-gram Extraction and Filtering}}\;
+Extract character n-grams ($n \in \{2, 3\}$) from $\mathcal{D}$ to form initial set $F_{\text{ng}}$\;
+Filter $F_{\text{ng}}$ by document frequency to obtain $F_{\text{ng}}^{\text{freq}}$\;
+Apply variance thresholding on $F_{\text{ng}}^{\text{freq}}$ to obtain candidate set $F_{\text{ng}}^{\text{var}}$\;
+
+\vspace{0.2cm}
+\emph{\textbf{\# Feature Scoring}};
+Compute Mutual Information $\mathbb{I}(f_j; Y)$ for each $f_j \in F_{\text{ng}}^{\text{var}}$;
+Train one L1-regularized Logistic Regression model on $F_{\text{ng}}^{\text{var}}$ using $C_{\mathrm{ng}}=0.5$ to obtain coefficients $\{w_j\}$;
+\For{each feature $f_j \in F_{\text{ng}}^{\text{var}}$}{
+Normalize scores: $\text{MI}_{\text{norm}}(f_j)$ and $\text{Coef}_{\text{norm}}(f_j)$;
+Compute composite score $\text{Score}_{\text{ng}}(f_j)$;
+}
+
+\vspace{0.2cm}
+\emph{\textbf{\# Selection and Output}}\;
+Select top $K_{\text{ng}}$ features based on $\text{Score}_{\text{ng}}(f_j)$ to form $F_{\text{ng}}^{\text{sel}}$\;
+\KwRet $F_{\text{ng}}^{\text{sel}}$\;
+\end{algorithm}
+\begin{algorithm}[!t]
+\footnotesize
+\caption{Model Training}
+\label{alg:focal_lgbm}
+\DontPrintSemicolon
+\SetKwInOut{KwData}{Input}
+\SetKwInOut{KwResult}{Output}
+
+\KwData{Scaled features $\mathbf{X}$, binary labels $\mathbf{y} \in \{0,1\}$, focusing parameter $\gamma \geq 0$, balancing parameter $\alpha \in (0,1)$, learning rate $\eta > 0$, boosting rounds $T$}
+\KwResult{Trained focal-loss-inspired LightGBM ensemble model $\hat{f}$}
+
+\vspace{0.2cm}
+\SetKwFunction{FMain}{CustomLoss}
+\SetKwProg{Fn}{Function}{:}{}
+\Fn{\FMain{$\mathbf{y}$, $\mathbf{z}$}}{
+    \emph{\textbf{\# Element-wise probability conversion and clipping}}\;
+    $\epsilon \gets 10^{-15}$\;
+    $\mathbf{p} \gets \operatorname{clip}\!\left(
+    \frac{1}{1 + \exp(-\mathbf{z})},\, \epsilon,\, 1-\epsilon
+    \right)$\;
+
+    \emph{\textbf{\# Class-specific quantities}}\;
+    $\mathbf{p}_t \gets \mathbf{y} \circ \mathbf{p} + (1 - \mathbf{y}) \circ (1 - \mathbf{p})$\;
+    $\boldsymbol{\alpha}_t \gets \mathbf{y} \cdot \alpha + (1 - \mathbf{y}) \cdot (1 - \alpha)$\;
+
+    \emph{\textbf{\# Focal weight}}\;
+    $\mathbf{w} \gets (1 - \mathbf{p}_t)^{\gamma}$\;
+
+    \emph{\textbf{\# Gradient and Hessian (diagonal approximation)}}\;
+    $\mathbf{g} \gets -\boldsymbol{\alpha}_t \circ \mathbf{w} \circ (\mathbf{y} - \mathbf{p})$\;
+    $\mathbf{h} \gets \max\!\left(
+    \boldsymbol{\alpha}_t \circ \mathbf{w} \circ \mathbf{p} \circ (1-\mathbf{p}),
+    \,10^{-6}
+    \right)$\;
+
+    \KwRet $\mathbf{g}, \mathbf{h}$\;
+}
+
+\vspace{0.2cm}
+\emph{\textbf{\# Boosting initialization}}\;
+
+$f^{(0)}(x)\gets0$\;
+
+\For{$t = 1$ \KwTo $T$}{
+    $\mathbf{z} \gets f^{(t-1)}(\mathbf{X})$\;
+    $(\mathbf{g}, \mathbf{h}) \gets \texttt{CustomLoss}(\mathbf{y}, \mathbf{z})$\;
+    Train weak learner $h_t(x)$ using gradients $\mathbf{g}$ and Hessians $\mathbf{h}$\;
+    $f^{(t)}(x) \gets f^{(t-1)}(x) + \eta \cdot h_t(x)$\;
+}
+
+\KwRet Final model: $\hat{f}(x) = f^{(T)}(x)$\;
+\end{algorithm}
+\end{bluechange}
+
+\section{Matched-Budget Selector Comparison}
+\begin{bluechange}
+The fixed PhishFusion partition contains 86,098 training, 8,278 validation, and 11,376 test URLs, with disjoint effective-domain groups. The shared N-gram vocabulary and supervised N-gram scorer are fitted to training URLs only. This selector comparison uses minimum document count 5, maximum document fraction .95, count variance threshold $10^{-5}$, and 5,000 selected N-grams, combined with 86 handcrafted variables. Ten seeds (42--51) each select a common 90.5\% training subsample for every selector. SDCS determines the budget for that seed; all five comparators retain exactly that count. The full training partition fits each selected-column scaler and classifier. The held-out test rows are identical for every fit.
+
+SDCS uses 20 internal subsamples, fraction .905, recurrence threshold .705, $C=.191$, MI weight .318, recurrence weight .767, and correlation cutoff .956, with at most 1,000 variables. MI uses at most 20,000 source observations. The mRMR-Pearson comparator prefilters to 1,500 MI-ranked variables and greedily maximizes normalized MI minus the largest absolute correlation with the selected set. It is this specified variant, not an unspecified generic mRMR implementation. The downstream classifier uses $(\gamma,\alpha)=(.30,.95)$, 500 trees, 50 leaves, learning rate .15, minimum child size 40, L1/L2 penalties .1/.3, and seed 42 for every method. No outcome determines the feature budget or classifier settings.
+\end{bluechange}
+\begin{table}[ht]
+\centering\color{blue}\small
+\caption{Ten-seed matched-budget selector comparison. Predictive metrics are percentages; recurrence uses pairwise Jaccard; selection time is seconds.}
+
+\begin{tabular}{lrrrrrr}
+\toprule
+Selector & Acc. & F1 & AUC & Jaccard & Mean $|\rho|$ & Selection (s) \\
+\midrule
+SDCS & 97.30 & 97.54 & 99.71 & 0.746 & 0.034 & 682.98 \\
+MI & 97.53 & 97.76 & 99.72 & 0.529 & 0.068 & 500.19 \\
+ANOVA-F & 97.21 & 97.46 & 99.70 & 0.937 & 0.070 & 10.07 \\
+L1-logistic & 97.03 & 97.29 & 99.69 & 0.744 & 0.031 & 40.12 \\
+LightGBM gain & 97.35 & 97.59 & 99.73 & 0.605 & 0.034 & 8.00 \\
+mRMR-Pearson & 97.44 & 97.67 & 99.66 & 0.119 & 0.027 & 501.94 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{bluechange}
+All methods retain $530.9\pm8.8$ variables. SDCS combines 97.54\% mean F1, Jaccard recurrence .746, and mean absolute correlation .034. Relative to MI ranking, it has greater recurrence (.746 versus .529) and approximately half the mean absolute correlation (.034 versus .068), with a mean F1 difference of 0.22 percentage points. This combined profile supports the joint relevance--stability--redundancy design. SDCS also has greater recurrence than gain and mRMR-Pearson, but not ANOVA-F; L1 has similar recurrence. Mean F1 differences between SDCS and every comparator are non-significant under Holm-adjusted paired signed-rank tests ($p_{\mathrm{Holm}}=1.0$). This does not establish equivalence. ANOVA-F emphasizes repeatable marginal effects but retains more correlated variables; mRMR-Pearson yields low average correlation with greater seed sensitivity. Selection times include each method's fitting and ranking operations; MI time includes its score computation, and mRMR includes MI plus correlation pruning. Timings do not identify a uniformly fastest selection strategy.
+\end{bluechange}
+
+\section{Probability Reliability and Cost-Sensitive Objectives}
+\begin{bluechange}
+Three training phishing-to-benign ratios (1:3, 1:5, 1:10), ten paired seeds (42--51), and four objectives yield 120 fitted classifiers. The same 568-column representation and source partition isolate objective effects. The validation and test phishing proportions are .462793 and .555995; they are not resampled to the training ratios. This controlled comparison isolates training prevalence and does not estimate precision at phishing-sparse deployment prevalences. Standard BCE, class-balanced BCE, focal weighting $(\gamma,\alpha)=(.55,.95)$, and $\alpha$-only weighting $(0,.95)$ share 500 boosting rounds. Fixed raw probabilities, validation-fitted sigmoid calibration, and raw validation-F1 thresholds are separate analyses. The calibrator is logistic regression on clipped probability logits ($10^{-12}$, $C=10^6$, lbfgs, 1,000 iterations), fitted exclusively on validation observations.
+
+For labels $y_i$ and phishing probabilities $p_i$, Brier score is $N^{-1}\sum_i(p_i-y_i)^2$, and log loss is $-N^{-1}\sum_i[y_i\log p_i+(1-y_i)\log(1-p_i)]$. With 15 equal-width bins $B_b$, $\mathrm{ECE}=\sum_b|B_b|N^{-1}|\overline p_b-\overline y_b|$. AP is the recall-increment-weighted average precision, not trapezoidal precision--recall area. MCC summarizes all four confusion-matrix cells as $(TP\,TN-FP\,FN)/\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}$.
+\end{bluechange}
+\begin{table}[ht]
+\centering\color{blue}\scriptsize
+\caption{Means over ten paired seeds. Raw, sigmoid-calibrated, and validation-threshold F1, AP and AUC are percentages. Brier, log loss and ECE use the raw probabilities.}
+\label{tab:probabilities}
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+Ratio & Objective & Raw F1 & Cal. F1 & Tuned F1 & AP & AUC & Brier & Log loss & ECE \\
+\midrule
+1:3 & Standard BCE & 88.61 & 95.83 & 94.58 & 99.73 & 99.68 & 0.0860 & 0.3098 & 0.1006 \\
+1:3 & Balanced BCE & 89.36 & 95.71 & 95.93 & 99.74 & 99.68 & 0.0771 & 0.2667 & 0.0931 \\
+1:3 & $\alpha$-only & 96.07 & 97.19 & 96.42 & 99.77 & 99.72 & 0.0330 & 0.1166 & 0.0480 \\
+1:3 & Focal & 95.71 & 96.85 & 96.58 & 99.75 & 99.69 & 0.0343 & 0.1110 & 0.0514 \\
+1:5 & Standard BCE & 87.51 & 95.62 & 96.03 & 99.73 & 99.67 & 0.1002 & 0.3924 & 0.1140 \\
+1:5 & Balanced BCE & 89.22 & 96.17 & 96.57 & 99.74 & 99.68 & 0.0838 & 0.3107 & 0.0991 \\
+1:5 & $\alpha$-only & 92.21 & 96.19 & 95.43 & 99.71 & 99.64 & 0.0576 & 0.1912 & 0.0756 \\
+1:5 & Focal & 92.84 & 96.65 & 96.38 & 99.72 & 99.65 & 0.0480 & 0.1470 & 0.0704 \\
+1:10 & Standard BCE & 85.30 & 96.14 & 96.44 & 99.71 & 99.64 & 0.1188 & 0.5042 & 0.1324 \\
+1:10 & Balanced BCE & 87.20 & 96.42 & 96.43 & 99.71 & 99.64 & 0.0994 & 0.3881 & 0.1142 \\
+1:10 & $\alpha$-only & 89.00 & 96.56 & 96.03 & 99.71 & 99.65 & 0.0778 & 0.2566 & 0.0980 \\
+1:10 & Focal & 89.44 & 95.84 & 95.33 & 99.70 & 99.63 & 0.0696 & 0.2070 & 0.0941 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{bluechange}
+The paired unit is the training seed, conditional on a fixed representation and test cohort. Pointwise 95\% intervals use Student's $t$ with nine degrees of freedom; two-sided Wilcoxon-Pratt tests and paired-$t$ sensitivity analyses retain the same contrasts. Holm families contain 54 raw comparisons, 54 calibrated comparisons, nine validation-threshold F1 comparisons, and 48 within-objective calibration comparisons. The 12-contrast F1-focused family is reported separately in Table~\ref{tab:focal}; its adjusted values are not interchangeable with the larger probability families. The minimum raw exact ten-pair signed-rank probability is .001953125, giving .10546875 at the first Holm step of a 54-comparison family. No contrast in that family can reach adjusted $p<.05$ with this test resolution; effect estimates and pointwise intervals describe the observed differences, while non-rejection does not establish equivalence. Identical adjusted values therefore reflect discrete probabilities and correction, not independently identical effect sizes.
+
+Focal weighting reduces raw probability errors relative to standard BCE, while ranking metrics remain close and the $\alpha$-only comparator is competitive. After validation-based calibration or threshold selection, focal F1 does not consistently exceed the alternatives. Reliability diagrams pool seed-run predictions only for descriptive visualization; repeated predictions of the same URL do not create independent sample replicates.
+\end{bluechange}
+\begin{figure}[ht]\centering
+\includegraphics[width=.98\textwidth]{Focal_Calibration.pdf}
+\caption{\blue{Reliability curves for all four objectives under the three training ratios, before and after validation-only sigmoid calibration. Bins are fixed at 15 equal-width intervals; the diagonal denotes ideal calibration.}}
+\end{figure}
+\begin{figure}[ht]\centering
+\includegraphics[width=.98\textwidth]{Focal_PR.pdf}
+\caption{\blue{Precision--recall characteristics for all four objectives and ten seeds per training ratio. The full probability range is retained; AP is calculated independently for each seed.}}
+\end{figure}
+
+\section{Distribution-Shift Representations}
+\begin{bluechange}
+All three controlled representations use the same 105,752-row source corpus and domain-group partition: 86,098 training, 8,278 validation, and 11,376 test URLs. Vocabulary, supervised selection, and scalers are fitted only to training observations. The original and source-balanced representations retain 573 variables; hostname-identity reduction retains 487. These are controlled representation fits, distinct from the 568-column compactness analysis.
+
+Hostname-identity reduction removes seven identity/lookup descriptors and restricts N-grams to path/query text. Source-only balancing forms strata using URL scheme, training-derived length quartile, path depth (0,1,2+), and query presence. For class $y$ and stratum $g$, let $p_y(g)$ be its source-training relative frequency and $q(g)=[p_0(g)+p_1(g)]/2$. Existing observations are sampled within class with weights $\operatorname{clip}[q(g)/p_y(g),.2,5]$; cells without both classes receive weight one. Each class retains its original count. No target proportions or labels determine these weights. All models use seed 42, $(\gamma,\alpha)=(.55,.95)$, 500 trees, and threshold .5.
+
+Primary full-URL evaluation excludes normalized-URL duplicates, conflicting normalized labels, and source-domain overlap using a common eligibility mask for all three models. The snapshot cohort retains 94,717 URLs (42,263 phishing; 52,454 benign), while the PhishTank cohort retains 41,761 (22,917 phishing; 18,844 benign). Their labels are inherited annotations, not verified live browsing. Snapshot source components overlap in collection history; these cohorts are not asserted to be strictly temporally independent. Popular-domain stress URLs already use HTTPS homepage syntax, so that result is not explained by an absent URL scheme.
+\end{bluechange}
+\begin{table}[ht]
+\centering\color{blue}\small
+\caption{Controlled representation comparison; predictive metrics are percentages.}
+
+\begin{tabular}{lrrrrrrr}
+\toprule
+Cohort & Representation & $n$ & Prec. & Recall & F1 & FPR & AUC \\
+\midrule
+Source test & Original & 11376 & 98.47 & 95.83 & 97.13 & 1.86 & 99.66 \\
+Source test & Source-balanced & 11376 & 97.96 & 92.52 & 95.16 & 2.42 & 99.46 \\
+Source test & Identity-reduced & 11376 & 98.70 & 97.22 & 97.95 & 1.60 & 99.77 \\
+Snapshot & Original & 94717 & 54.21 & 87.27 & 66.87 & 59.40 & 66.28 \\
+Snapshot & Source-balanced & 94717 & 63.06 & 90.91 & 74.47 & 42.91 & 76.72 \\
+Snapshot & Identity-reduced & 94717 & 55.81 & 84.37 & 67.18 & 53.82 & 65.62 \\
+PhishTank & Original & 41761 & 76.82 & 86.39 & 81.32 & 31.70 & 86.22 \\
+PhishTank & Source-balanced & 41761 & 81.09 & 89.15 & 84.93 & 25.29 & 89.65 \\
+PhishTank & Identity-reduced & 41761 & 77.94 & 77.06 & 77.50 & 26.53 & 83.32 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{bluechange}
+The balanced-minus-original F1 gains are 7.59 and 3.61 points on the two external full-URL cohorts, accompanied by lower FPR but a 1.97-point source-test F1 decrease. Fixed-model domain bootstrap intervals describe dependence among URLs within domains, not training-run uncertainty. On the positive-only temporal cohort, original and balanced controlled fits each detect 255/290 URLs, while identity reduction detects 249/290. These figures are distinct from the 256/290 result of the original temporal model. On the 89,937 homepage proxies, flag rates are 82.91\%, 86.98\%, and 91.37\% for original, balanced, and identity-reduced fits. The domain-masking alternative therefore does not remove source sensitivity across every population.
+\end{bluechange}
+
+\section{Physical ARM Smartphone Protocol}
+\begin{bluechange}
+PhishTank is used for both external detection evaluation and resource measurements. The common resource benchmark uses 5,000 full PhishTank URLs (2,705 benign; 2,295 phishing), sampled uniformly without replacement using NumPy RandomState(42), without class stratification or performance-based selection. Sampling uses the same 93,498-record PhishTank copy as the x86 benchmark, comprising 51,453 benign and 42,045 phishing URLs. The external detection evaluation uses the 93,788-record PhishTank copy (51,453 benign; 42,335 phishing). These copies share 55,620 distinct exact URL/label pairs and are not related solely by removal of 290 records. The collection dates and intervening curation history of the 93,498-record copy are unavailable; no collection date is inferred from the other copy. Neither this PhishTank copy nor its 5,000-URL sample contains an exact URL from the 86,098-row PhishFusion training partition. This exact-URL check does not establish domain-disjointness or prospective collection independence. Resource-workload quality metrics characterize the common inference workload and do not replace the main external-evaluation results.
+
+Frozen feature definitions and learned parameters are exported to inference-only ARM ports. LightGBM 4.5.0 uses its native runtime; the other ensembles retain their learned tree, SVM, naive-Bayes, and logistic-regression functions. Every prepared input, probability, and .5-threshold label is numerically checked against its reference, followed by 60 interleaved trials: six models, five repeats, batch sizes 1 and 100. The common schedule uses seed 20261019, 20 warm-up URLs, one numerical-library thread, and a fresh process for every runtime trial. Stage times separate URL feature construction, preprocessing, and classifier inference; initialization is separate.
+
+The Roy comparator uses its 17-feature best-effort Random Forest reproduction; the TabNet label denotes its selected-descriptor stacking ensemble. The ports are not author-provided mobile applications, and RSS differences include runtime assembly and representation overhead. Thermal controls postpone trials above 40\,${}^{\circ}$C and stop the energy workload at 43\,${}^{\circ}$C or battery charge at or below 25\%.
+\end{bluechange}
+\begin{table}[ht]
+\centering\color{blue}\small
+\caption{Five-repeat phone runtime means. Stage costs are ms/URL; initialization is seconds and excluded from resident inference. Batch-100 costs are amortized per URL.}
+
+\begin{tabular}{lrrrrrrr}
+\toprule
+Model & Batch & Features & Preprocess & Inference & Total & RSS (MiB) & Init. (s) \\
+\midrule
+LitePhish & 1 & 2.820 & 0.123 & 0.736 & 3.679 & 69.02 & 0.168 \\
+MUDS & 1 & 0.423 & 0.003 & 0.234 & 0.660 & 68.25 & 0.140 \\
+Roy & 1 & 0.265 & 0.003 & 0.531 & 0.798 & 133.67 & 0.807 \\
+E2Phish & 1 & 0.259 & 0.096 & 3.690 & 4.045 & 59.14 & 0.194 \\
+TabNet & 1 & 0.975 & 0.215 & 3.291 & 4.480 & 148.30 & 0.891 \\
+Ebbu & 1 & 24.150 & 0.006 & 0.462 & 24.618 & 152.48 & 1.671 \\
+LitePhish & 100 & 2.200 & 0.034 & 0.101 & 2.335 & 69.32 & 0.174 \\
+MUDS & 100 & 0.308 & 0.000 & 0.022 & 0.331 & 68.33 & 0.147 \\
+Roy & 100 & 0.119 & 0.000 & 0.190 & 0.310 & 133.66 & 0.738 \\
+E2Phish & 100 & 0.083 & 0.002 & 2.396 & 2.480 & 59.34 & 0.173 \\
+TabNet & 100 & 0.722 & 0.007 & 1.877 & 2.606 & 148.26 & 1.092 \\
+Ebbu & 100 & 24.098 & 0.000 & 0.014 & 24.112 & 152.35 & 1.920 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{bluechange}
+Battery measurements use airplane mode, USB disconnected, fixed dim display (brightness 30), and periodic wake commands every eight telemetry iterations. A short continuity qualification precedes the 30 assigned workloads. Five randomized blocks contain all six models; each trial has 60 s resident-model idle, 120 s continuous batch-1 inference, and 60 s idle. Signed current polarity is qualified once, not rectified per sample. Power $P(t)=I(t)V(t)$ is integrated by the trapezoidal rule on the same boot-time clock as workload events. Gross energy divides integrated active energy by completed URLs; incremental energy subtracts time-interpolated pre/post idle power before division. Display, telemetry, wake commands, and OS overhead are present in both idle and load phases.
+
+All assigned trials retain prediction agreement. Ebbu covers 4,923--4,989 distinct URLs within its duration-limited trials; faster models cycle through the complete 5,000-URL pool. Thus, all models share the frozen ordered pool and duration protocol, not identical executed-URL counts. Loading energy is excluded. Continuous telemetry, discharge state, radio settings, temperature, clock continuity, and prediction equivalence are verified for each assigned trial. The signed-current integral is approximately twice the change in the reported charge counter, but that counter is nearly proportional to integer battery percentage. It is not an independent calibration reference; no factor-of-two rescaling is applied. Absolute fuel-gauge accuracy remains unknown.
+\end{bluechange}
+\begin{table}[ht]
+\centering\color{blue}\small
+\caption{Phone battery-side measurements over five repeats. Power is in W; energy is in mJ/URL. SD describes repeat variability, not sensor calibration uncertainty.}
+
+\begin{tabular}{lrrrrrr}
+\toprule
+Model & Load power & Idle power & Gross mean & Gross SD & Incremental mean & Incremental SD \\
+\midrule
+LitePhish & 2.046 & 1.124 & 6.084 & 0.171 & 2.739 & 0.148 \\
+MUDS & 2.051 & 1.133 & 1.137 & 0.050 & 0.508 & 0.039 \\
+Roy & 2.056 & 1.072 & 1.190 & 0.060 & 0.570 & 0.043 \\
+E2Phish & 2.465 & 1.127 & 8.993 & 0.377 & 4.882 & 0.432 \\
+TabNet & 2.408 & 1.126 & 8.665 & 0.241 & 4.612 & 0.412 \\
+Ebbu & 2.133 & 1.086 & 51.724 & 1.446 & 25.383 & 1.331 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Detection--Resource Frontiers}
+\begin{bluechange}
+The primary five-dimensional comparison maximizes accuracy and minimizes FPR, batch-1 latency, peak RSS, and gross energy on the common phone workload. A model is non-dominated when no other model is at least as good in every objective and strictly better in at least one. No arbitrary objective weights are applied. LitePhish, MUDS, E2Phish, TabNet, and Ebbu form the mean-coordinate non-dominated set; MUDS dominates the Roy reproduction at these mean coordinates. The set is unchanged using F1 instead of accuracy or incremental instead of gross energy. In observed-repeat-envelope comparisons, no full five-dimensional dominance is established, reflecting resource variability. The separate batch-100 comparison uses four objectives and does not borrow batch-1 energy; all six models are non-dominated there.
+
+The accuracy--latency and accuracy--energy projections contain LitePhish, MUDS, and Ebbu on their frontiers. The FPR projections instead favor MUDS and TabNet. A projection frontier is not a substitute for full-dimensional dominance. LitePhish trades additional cost and FPR relative to MUDS for higher phishing recall; relative to Ebbu, it reduces cost while sacrificing some accuracy on this workload. These are operating choices on one device and population, not calibrated estimates of universal deployment benefit.
+\end{bluechange}
+\begin{figure}[ht]\centering
+\includegraphics[width=.95\textwidth]{Phone_Pareto.pdf}
+\caption{\blue{Accuracy and FPR projections against online latency and gross battery-side energy for all six models. Logarithmic cost axes retain the full observed range. Dashed segments identify projection-specific non-dominated means.}}
+\end{figure}
+
+\section{Supporting x86 and Repeated-Split Results}
+\begin{bluechange}
+The x86-64 latency and CPU-package energy protocols are separate from the physical-phone protocol. Online means URL-at-a-time inference (batch size one), not online training or live network access. The raw and compact paths use different sparse/dense assembly costs, so feature reduction is not interpreted as an isolated latency intervention. The x86 values and repeated domain-split summaries follow.
+\begin{table}[!t]
+\centering
+\caption{Common-protocol resource comparison of models trained on PhishFusion. Latency and memory were measured on fixed-seed external URLs under a one-core/512~MiB x86-64 profile; CPU-package energy was measured separately on an Intel Core i7-9700 using five randomized, duration-controlled trials. FE denotes feature extraction. Energy intervals are 95\% Student-$t$ confidence intervals. Roy is evaluated on the physical smartphone; no x86 measurement is assigned to that row.}
+\label{tab:inference_time}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Model} & \textbf{Bundle} & \textbf{Peak RSS} & \textbf{Online FE} & \textbf{Online total} & \textbf{Batch URL/s} & \textbf{CPU energy} \\
+ & \textbf{MB} & \textbf{MiB} & \multicolumn{2}{c}{\textbf{ms/URL}} & & \textbf{mJ/URL (95\% CI)} \\
+\midrule
+Roy et al. & -- & -- & -- & -- & -- & -- \\
+Ebbu             & 20.76 & 330.1 & 43.006 & 49.101 & 54    & 341.10 (265.99--416.21) \\
+E2Phish          & 8.89  & 204.1 & 3.856  & 19.712 & 134   & 45.29 (30.98--59.60) \\
+MUDS             & 0.35  & 198.1 & 13.295 & 15.702 & 2,817 & 2.41 (2.08--2.75) \\
+TabNet           & 67.53 & 328.7 & 11.429 & 54.301 & 306   & 89.46 (55.43--123.49) \\
+LitePhish (Ours) & 1.91  & 232.4 & 3.999  & 5.322  & 959   & 7.02 (6.32--7.73) \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+\begin{table}[!t]
+\centering
+\caption{Repeated-run stability of LitePhish on PhishFusion under domain-stratified splitting. Metrics are reported over ten independent random seeds. All values are percentages except selected features.}
+\label{tab:repeated_run_stability}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{Mean} & \textbf{Std. dev.} & \textbf{95\% CI half-width} \\
+\midrule
+Accuracy & 97.20 & 4.12 & 2.95 \\
+Precision & 97.85 & 0.71 & 0.51 \\
+Recall & 96.83 & 7.10 & 5.08 \\
+F1-score & 97.20 & 3.91 & 2.80 \\
+ROC-AUC & 99.78 & 0.37 & 0.26 \\
+PR-AUC & 99.82 & 0.27 & 0.19 \\
+MCC & 94.65 & 7.32 & 5.24 \\
+Hard-negative FPR & 2.23 & 0.52 & 0.37 \\
+Selected features & 556.1 & 13.0 & 9.3 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+\end{bluechange}
+
+\section{Instance-Level Explanations}
+\begin{bluechange}
+The following local decompositions complement the global SHAP analysis. Feature contributions depend on the fitted predictor and background distribution; they do not establish causal effects or immutable token reputation.
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.80\textwidth]{Local_Interpretability.pdf}
+    \caption{Local decision decomposition. \textbf{(A)} Phishing: high TLD risk and suspicious tokens. \textbf{(B)} Legitimate: low-risk structural patterns and low entropy. \textbf{(C)} Borderline: structural risks offset by low-risk lexical and structural signals.}
+\label{fig:local_waterfall}
+\end{figure}
+\end{bluechange}
 
 \end{document}
