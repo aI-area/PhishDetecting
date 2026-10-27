@@ -1,0 +1,23 @@
+{
+  "status": "IDENTICAL_PARTITIONS_VERIFIED",
+  "dataset_sha256": "c8af8da76bb6a521fcb7515eab802fec450dd10eafdfb49593096dcc07f1de8c",
+  "rows": 105752,
+  "partitions": {
+    "train": {
+      "rows": 86098,
+      "index_sha256": "dce475aadde012b5f1d6435c5c89777f9800a99b66a676dd1aa053bbd81caf40"
+    },
+    "validation": {
+      "rows": 8278,
+      "index_sha256": "81b6850bf85222e3df67aebd327ccb7b4c81e5d95263d2ae06f5eae3c1eee404"
+    },
+    "test": {
+      "rows": 11376,
+      "index_sha256": "b37ff11d8baf705026dbe833e65a9425c3d2822cabcebc5ed9ed300504082921"
+    }
+  },
+  "manifest_sha256": "4f40f45ba2a291001d3869666182408781d54afbe43c1db70aad35133bbdb0de",
+  "group_overlaps": 0,
+  "anchor": "retained original LitePhish domain-group split",
+  "previous_98948_manifest_not_used": true
+}

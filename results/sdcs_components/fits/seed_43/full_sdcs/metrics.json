@@ -1,0 +1,21 @@
+{
+  "seed": 43,
+  "method": "full_sdcs",
+  "feature_count": 544,
+  "stability_seconds": 189.25195015594363,
+  "relevance_seconds": 492.08087509777397,
+  "selection_seconds": 682.6192245725542,
+  "scaling_seconds": 4.5162637466564775,
+  "model_fit_seconds": 8.572530654259026,
+  "selection_population_max_abs_correlation": 0.950025593354417,
+  "reference_max_probability_error": 2.220446049250313e-16,
+  "accuracy": 0.9707278481012658,
+  "precision": 0.9836938973199871,
+  "recall": 0.9633201581027668,
+  "f1": 0.9734004313443566,
+  "roc_auc": 0.9968663036239839,
+  "mcc": 0.9411212559754554,
+  "mean_abs_correlation": 0.0290733335284549,
+  "max_abs_correlation": 0.9751128670811453,
+  "p95_abs_correlation": 0.1092305416604842
+}

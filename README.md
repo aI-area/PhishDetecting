@@ -2,7 +2,7 @@
 
 Code, datasets, trained inference components, and evaluation records for **LitePhish: Resource-Efficient URL-Intrinsic Phishing Detection for Consumer Electronics**.
 
-LitePhish combines 86 URL-intrinsic descriptors with selected character 2-/3-grams. Stability-Driven Composite Selection (SDCS) controls feature relevance, recurrence, and redundancy. A focal-loss-inspired LightGBM classifier supports phishing detection without synthetic resampling. The evaluation includes domain-disjoint partitions, four source–target transfers, probability calibration, distribution shift, and physical ARM smartphone measurements.
+LitePhish combines 86 URL-intrinsic descriptors with selected character 2-/3-grams. Stability-Driven Composite Selection (SDCS) controls feature relevance, recurrence, and redundancy. A focal-loss-inspired LightGBM classifier supports phishing detection without synthetic resampling. The evaluation includes domain-disjoint partitions, four source–target transfers, probability calibration, distribution shift, PhreshPhish external evaluation, and physical ARM smartphone measurements.
 
 ![LitePhish framework](model.png)
 
@@ -20,7 +20,7 @@ The reference classical-model environment uses Python 3.9.20, NumPy 2.0.2, panda
 
 ## Datasets
 
-The four evaluation datasets use `url` and `phishing` columns (`1` = phishing).
+The four core evaluation datasets use `url` and `phishing` columns (`1` = phishing).
 
 | Dataset | Benign | Phishing | Total |
 |---|---:|---:|---:|
@@ -30,6 +30,12 @@ The four evaluation datasets use `url` and `phishing` columns (`1` = phishing).
 | PhishTank, external evaluation | 51,453 | 42,335 | 93,788 |
 
 Files are in [`dataset`](dataset). PhishTank contains **93,788 URLs** for external evaluation. Phone resource measurements use a fixed **5,000-URL workload** (2,705 benign and 2,295 phishing URLs), retained with the inference bundles. See [the dataset notes](dataset/README.md).
+
+The additional [PhreshPhish evaluation](dataset/PhreshPhish/README.md) uses a pinned
+public test release of 168,060 URLs. Source-overlap and eligibility controls retain
+166,227 URLs (89,686 benign; 76,541 phishing); the source-domain-disjoint subset
+contains 141,623 URLs. It is separate from the PhishTank cohort. Full URL metadata,
+eligibility definitions and all comparative results are provided.
 
 `merged.csv` is the exact URL/label union of PhishFusion, Ebbu2017, and PhishStorm for descriptive keyword analysis only: 125,510 phishing and 130,899 benign URLs. It is not an additional training or test cohort.
 
@@ -51,11 +57,12 @@ The canonical PhishFusion partition is [`manifests/PhishFusion.csv`](manifests/P
 | Main display | Analysis | Public entry points / records |
 |---|---|---|
 | Table II | Dataset composition | `dataset/`, `results/dataset_composition.csv`, `results/union_flow.csv` |
-| Table III | Internal comparisons, including Roy | Shared-split runners; `run_roy_baseline.py`; `results/roy_phishfusion_predictions.csv` |
+| Table III | Internal comparisons, including Roy et al. | Shared-split runners; `run_roy_baseline.py`; `results/roy_phishfusion_predictions.csv` |
 | Table IV / Figure 3 | Four transfers | Cross-dataset runners; `results/cross_dataset_roc_points.csv.gz` |
 | Table V | Matched-budget selectors | `compare_feature_selectors.py`; `results/selector_*.csv` |
 | Table VI | Paired focal-objective comparison | `run_focal_imbalance_ablation.py`, `compare_probability_objectives.py`; `results/objective_*` |
-| Table VII | External PhishTank evaluation | Prediction evaluators; `results/roy_external_predictions.csv` |
+| Table VII(a) | External PhishTank evaluation | Prediction evaluators; `results/roy_external_predictions.csv` |
+| Table VII(b) | External PhreshPhish comparison | `experiments/phreshphish/`; `results/phreshphish/` |
 | Table VIII | Physical smartphone quality and resources | `experiments/android/`; `results/phone_*.csv` |
 | Table IX | Source-only distribution-shift alternatives | `fit_shift_representations.py`, `evaluate_shift_conditions.py`; `results/distribution_shift_summary.csv` |
 | Figure 5 | Detection–resource frontiers | `summarize_phone_tradeoffs.py`; `results/pareto_*.csv` |
@@ -67,3 +74,12 @@ See the [workflow guide](experiments/README.md), [configuration](experiments/LIT
 python -m experiments.validate_public_results --root .
 ```
 
+
+The [SDCS component study](experiments/SDCS_COMPONENTS.md) retains all four
+conditions across ten seeds in `results/sdcs_components`. Source-validation
+low-FPR analyses are in `results/low_fpr`; these retain every objective, seed and
+operating point. Check the complete external and supporting result records with:
+
+```bash
+python -m experiments.validate_extended_results --root .
+```

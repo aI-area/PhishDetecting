@@ -9,7 +9,8 @@ Table numbers refer to the 12-page main manuscript. The supporting methods and a
 | IV / Fig. 3 | Four source–target transfers | Source-trained classifiers; original target row order; `results/cross_dataset_roc_points.csv.gz` contains all 44 curves. |
 | V | Six matched-budget selectors | Same 5,086 source-trained candidates and identical downstream model; ten selector seeds 42–51; common 11,376 test rows; `results/selector_summary.csv`, `selector_per_seed.csv`, `selector_predictions.csv.gz` |
 | VI | Fixed-threshold imbalance | Ten paired seeds, fixed 568-column representation, three training ratios; `results/objective_per_seed.csv`, `objective_summary.csv`, `objective_predictions/`, `objective_partitions.npz` |
-| VII | External detection | 93,788 PhishTank/Common Crawl URLs; `results/roy_external_predictions.csv`; external evaluators |
+| VII(a) | External PhishTank detection | 93,788 PhishTank/Common Crawl URLs; `results/roy_external_predictions.csv`; external evaluators |
+| VII(b) | External PhreshPhish detection | `dataset/PhreshPhish/`; `results/phreshphish/`; `experiments/phreshphish/` |
 | VIII | Physical ARM smartphone | Six models; 60 fresh-process runtime trials and 30 separate battery trials; `results/phone_predictions.csv`, `phone_runtime_trials.csv`, `phone_energy_trials.csv`, `phone_energy_summary.csv`, `phone_quality_resources.csv` |
 | IX | Distribution shift | Three source-trained conditions; common source test and eligible full-URL targets; `results/distribution_shift_summary.csv` |
 | Fig. 5 | Detection–resource analysis | Unrounded common-phone quality and cost; `results/pareto_membership.csv`, `pareto_pairwise_dominance.csv` |
@@ -26,3 +27,11 @@ Table numbers refer to the 12-page main manuscript. The supporting methods and a
 ## What can be checked directly
 
 `validate_public_results.py` recomputes classification metrics, selector summaries, selected objective metrics, dataset counts, and mean-coordinate Pareto membership from retained records. It does not retrain models or recreate hardware measurements. Model refitting additionally requires the appropriate source datasets, fixed manifests, serialized representation, dependency versions, and environment. The workflow guide identifies those requirements instead of treating a saved-result check as a complete retraining run.
+
+## Component and operating-point records
+
+`results/sdcs_components` contains all 40 component fits, feature selections and
+held-out probabilities. `results/low_fpr` contains all 480 objective operating
+points and 60 shift evaluations, including their underlying source-validation
+and held-out probabilities. `validate_extended_results.py` independently
+recomputes these records and the 44 PhreshPhish metric rows.

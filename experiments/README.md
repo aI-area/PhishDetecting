@@ -15,7 +15,7 @@ python -m experiments.summarize_phone_tradeoffs --results results --output local
 
 These commands inspect retained measurements and predictions, not new training or hardware trials.
 
-## Roy manual-feature Random Forest
+## Roy et al. manual-feature Random Forest
 
 ```bash
 python -m experiments.run_roy_baseline --mode internal --source-dataset your_path/PhishFusion.csv --source-manifest manifests/PhishFusion.csv --output-dir local_results/roy --name PhishFusion --jobs 8
@@ -74,3 +74,18 @@ Shared-split and cross-dataset runners remain available for CNN-Fusion, DEPHIDES
 - Neural baselines: a compatible TensorFlow/Keras environment specific to each original architecture.
 - URLNet: Python 3.7.12, TensorFlow 1.15.0, NumPy 1.21.6, tflearn 0.3.2, dual branch `emb_mode=3`.
 - Android: Termux Python 3.14.6, NumPy 2.4.4, native LightGBM 4.5.0 without OpenMP, and compiled ensemble kernels. These phone packages differ from the server environment; cross-platform timings are not attributable to hardware alone.
+
+## External and component analyses
+
+- [PhreshPhish](phreshphish/README.md): pinned URL metadata acquisition,
+  pretrained baseline and representation evaluation, and domain-cluster FPR
+  bootstrap. Results are in `results/phreshphish`.
+- [SDCS components](SDCS_COMPONENTS.md): four relevance/stability/correlation
+  conditions over ten paired seeds. Results are in `results/sdcs_components`.
+- Low-FPR operating points: source-validation thresholds for all retained
+  objective and distribution-shift predictions.
+
+```bash
+python -m experiments.low_fpr_operating_points --paper-data results --shift results/low_fpr/source_reference --output local_results/low_fpr
+python -m experiments.validate_extended_results --root .
+```

@@ -1,0 +1,545 @@
+feature_index,feature_name
+4587,tp:
+73,Non-HTTP Scheme
+4005,p:
+4006,p:/
+4093,ps:
+4364,s:
+4365,s:/
+31,Uppercase Ratio
+4590,tps
+4090,ps
+54,Alpha-Digit Transitions
+33,Hostname Entropy
+40,Path Entropy Variance
+25,Hostname to URL Ratio
+9,Mean Token Length
+55,Digit-Alpha Transitions
+34,Path Entropy
+37,URL 3-Gram Entropy
+26,Path to URL Ratio
+36,URL 2-Gram Entropy
+0,URL Length
+10,Digit Count
+38,Hostname 2-Gram Entropy
+23,Domain to URL Ratio
+15,Slash Count
+24,Subdomain to URL Ratio
+48,Alpha Ratio in Hostname
+77,Char Diversity in URL
+7,Max Token Length
+19,Path Depth
+39,Domain Entropy
+52,Letter-Digit-Letter Count
+50,Special Char Ratio in Hostname
+61,Suspicious Keyword
+8,Min Token Length
+5,Path Length
+4,Subdomain Length
+28,Path to Domain Ratio
+53,Digit-Letter-Digit Count
+57,Consecutive Digits
+1,Hostname Length
+45,Alphabetic in Hostname
+78,Char Diversity in Hostname
+60,Pattern Density
+16,Dot Count
+58,Consecutive Letters
+2,Domain Length
+301,.ph
+4051,php
+49,Digit Ratio in Hostname
+3102,hp
+385,//w
+299,.p
+74,WWW Prefix
+44,Digits in Hostname
+4050,ph
+32,Subdomain Digit Ratio
+11,Subdomain Depth
+42,Subdomain Entropy Gradient
+14,Encoded Hostname Indicators
+6,Query Length
+41,Rolling Entropy Range
+56,Consecutive Chars
+35,Query Entropy
+29,Query to Domain Ratio
+63,Digits in Subdomain
+594,/ww
+4889,ww.
+4887,ww
+270,.ht
+27,Query to URL Ratio
+30,Query to Path Ratio
+18,Query Param Count
+2841,fa
+3208,in/
+4015,p?
+4872,wp
+3879,ogi
+4890,www
+17,Hyphen in Hostname
+1814,ac
+4801,w.
+2285,co
+2989,gin
+593,/wp
+858,202
+46,Punctuation in URL
+3104,hp?
+268,.h
+2631,eb
+3615,ml
+405,/20
+3115,htm
+614,00
+4573,tml
+4873,wp-
+3204,in
+2213,cc
+3215,ind
+4648,ub
+4570,tm
+525,/lo
+2987,gi
+4331,s/
+4353,s1
+3675,n.p
+2776,ew/
+4384,se
+4866,wn
+730,1.
+3241,ir
+4393,ses
+2437,de
+2456,dex
+3802,nt
+3498,ls
+236,.c
+242,.co
+3489,loo
+3727,nce
+3025,gv
+3904,om
+2287,com
+3,TLD Length
+4385,se&
+2845,fac
+2564,e1
+1103,4c
+2979,ges
+1890,amp
+275,.io
+2779,ex
+1960,aym
+4366,s=
+3647,ms=
+4332,s/2
+3890,ok
+3026,gvi
+4868,wnl
+2022,b?s
+2560,e0
+2515,duc
+3503,lse
+2457,df
+2080,bi.
+2526,e&
+3207,in.
+3192,il
+12,Domain Hierarchy
+2518,dva
+267,.gv
+2389,d=
+2335,d/
+65,Long Numeric Domain
+2240,ceb
+1605,=30
+939,2pa
+3990,p-
+1786,a9
+634,02
+1794,aa
+2657,ecu
+351,.zi
+1435,8a
+2023,ba
+963,30
+3940,op=
+371,//h
+3929,oo
+734,1.g
+938,2p
+682,0c
+2401,da
+3636,mp;
+617,000
+4896,x-1
+3927,ont
+5011,ym
+2888,fi
+3917,on=
+1982,b1
+486,/f
+515,/in
+3848,oa
+5013,yms
+904,2b
+197,.1
+4354,s1.
+4367,s=3
+2806,f2
+4007,p;
+1665,?st
+1740,a1
+4513,t=
+1451,8d
+3679,n/
+4012,p=
+3804,nt/
+3580,mai
+3776,nl
+2266,cie
+252,.ex
+1184,5a
+2489,dmi
+4291,rt=
+2371,d6
+470,/do
+2728,ent
+4013,p=f
+2783,exe
+2358,d4
+2815,f4
+1824,ace
+2290,cou
+3731,nd
+103,&am
+1822,acc
+1576,;d
+3684,n/d
+1969,b.c
+2643,ebo
+4895,x-
+138,-1v
+2034,ban
+1288,6d
+2430,dd
+2090,bm
+2178,c8
+3532,m.h
+2318,cx-
+4194,rab
+2347,d2
+5064,zi
+4040,pda
+833,1v
+3195,il=
+2009,b7
+1353,7a
+2149,c2
+1623,=f
+964,300
+2383,d9
+4673,uid
+3633,mp
+1828,acx
+3979,own
+1839,ae
+3461,lie
+3228,io/
+4902,x/
+5065,zip
+1994,b4
+3161,icl
+3507,lth
+446,/c
+375,//m
+2132,c0
+102,&a
+1004,3c
+210,.2
+2824,f6
+760,13
+4010,p;l
+1366,7d
+3668,n.
+1524,9a
+690,0d
+4542,ten
+407,/2p
+2301,cs/
+2338,d/v
+66,TLD Risk Score
+4322,s.
+475,/e/
+3882,ogr
+4695,unt
+4847,we
+1500,93
+3850,oad
+350,.z
+4030,pag
+3243,ira
+2853,fb
+2449,del
+3484,loa
+13,TLD Structure Depth
+2276,cle
+3968,oun
+2601,e7
+3593,md=
+4390,sec
+1643,?cm
+4309,ry/
+3162,ics
+1188,5b
+2576,e3
+2014,b8
+790,1a
+2671,edu
+2337,d/e
+4238,rg/
+4882,ws/
+1577,;de
+4654,uca
+694,0e
+629,013
+3926,ons
+59,Special Char Cluster
+2317,cx
+1545,9e
+2353,d3
+1604,=3
+272,.i
+1097,4b
+3806,nte
+4718,usr
+2527,e&a
+107,&di
+3744,nes
+69,Hex-Encoded IP
+1779,a8
+2917,fs/
+369,//f
+2038,bb
+1898,ank
+4716,usi
+123,&se
+908,2c
+3511,lud
+3957,ory
+3029,gx
+2365,d5
+3005,go
+505,/h
+2164,c5
+2474,dic
+1196,5e
+2021,b?
+3884,ogy
+1013,3e
+1369,7e
+1415,84e
+2181,c9
+625,00w
+2487,dm
+297,.or
+314,.s1
+2155,c3
+4166,r.f
+1121,4f
+2288,con
+1146,5.
+1010,3d
+2837,f9
+567,/st
+1455,8e
+3733,nde
+1862,ail
+1663,?s
+4901,x.p
+4768,vel
+854,20
+4340,s/d
+2077,bh
+2607,e8
+2311,cum
+1985,b2
+4544,tes
+3706,n=
+1624,=fa
+3933,ook
+3619,mm
+75,TLD is .com
+4173,r/h
+4089,pro
+4757,van
+3559,m/w
+4514,t=f
+3949,org
+4091,ps.
+4077,pp
+1529,9b
+1579,;l
+771,15d
+3100,hos
+3906,om/
+1809,abi
+2172,c6
+4038,pd
+2072,bf
+3714,n_
+3434,lay
+4008,p;d
+4928,xec
+1742,a13
+4258,rl/
+3768,nk
+1580,;lo
+3788,nol
+3483,lo
+1114,4e
+1856,agr
+2793,f/
+3767,nj
+4330,s.s
+3317,jou
+1686,_a
+4198,ram
+3123,hw
+463,/d/
+2939,g/
+1229,6.
+845,2.
+1761,a4
+1019,3f
+1358,7b
+2378,d8
+3226,io
+799,1c
+3512,lug
+648,04e
+3009,goo
+1000,3b
+2078,bho
+1291,6e
+4849,wel
+2138,c1
+971,32
+2223,cco
+2802,f1
+113,&i
+2051,bd
+3211,in_
+778,17
+2374,d7
+4228,ren
+1296,6f
+1832,ad/
+403,/2
+196,.00
+4441,src
+857,201
+3595,me/
+3033,gy/
+2723,enc
+1884,am
+1549,9f
+1109,4d
+2502,dow
+3934,oop
+1200,5f
+3946,or/
+3436,lc
+4396,sfe
+667,09
+1939,ato
+4168,r/
+4650,ub?
+2611,e8c
+2096,bo
+4526,tb/
+3165,id
+4615,tx
+4026,pa
+139,-2
+1044,4.
+2168,c5a
+2538,e.c
+1811,abo
+4935,xk0
+2591,e5
+88,%20
+374,//l
+2018,b9
+877,24a
+3240,iq
+3000,gn
+3323,js
+4903,x/2
+1368,7dd
+561,/si
+4554,ti
+3168,id=
+1284,6c
+2774,evd
+4533,te
+1925,ase
+511,/i
+1533,9c
+3584,mar
+492,/fi
+2690,efs
+777,16b
+900,2a
+3198,ile
+692,0db
+3992,p-c
+2259,ch=
+3611,miu
+590,/w
+2940,g/2
+225,.9
+3598,men
+4241,rgy
+3334,k.c
+2796,f0
+4016,p?c
+4064,pli
+2686,efe
+3478,lls
+1079,47
+804,1d
+2541,e.o
+925,2f
+3177,if
+588,/ve
+2281,cmd
+3203,imp
+1972,b/
+2903,fm
+4515,ta
+2667,edc
+1889,amm
+2762,et.
+739,1/0
+1275,6a
+122,&s
+4630,u/l
+1152,5/0
+460,/cs
+4234,rfi
+4301,rv
+1632,=lo
+3765,niu
+2846,fal
+4432,sp
+994,39d
+454,/ch
+3273,ixr
+719,0w
+1403,81
+105,&d
+4555,tic
+2712,em-

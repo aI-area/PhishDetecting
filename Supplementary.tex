@@ -2,10 +2,10 @@
 \usepackage[a4paper,margin=1.55cm]{geometry}
 \usepackage{booktabs,longtable,array,graphicx,xcolor,caption,amsmath,amsfonts,multirow,adjustbox}
 \graphicspath{{image/}}
-\definecolor{bodycolor}{rgb}{0,0,0}
+\definecolor{supportingtext}{rgb}{0,0,0}
 \usepackage[ruled,vlined]{algorithm2e}
-\newcommand{\blue}[1]{{\color{blue}#1}}
-\newenvironment{bluechange}{\color{blue}}{}
+\newcommand{\blue}[1]{{\color{black}#1}}
+\newenvironment{bluechange}{\color{black}}{}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{4pt}
@@ -14,7 +14,7 @@
 \begin{document}
 \begin{center}
 {\Large\bfseries Supplementary Material}\\[20pt]
-{\large\color{bodycolor} LitePhish: Resource-Efficient URL-Intrinsic Phishing Detection for Consumer Electronics}
+{\large\color{supportingtext} LitePhish: Resource-Efficient URL-Intrinsic Phishing Detection for Consumer Electronics}
 \end{center}
 
 \color{black}
@@ -126,14 +126,14 @@ Table~\ref{tab:features} defines the 86 handcrafted descriptors. Ratio denominat
 \end{longtable}
 \normalsize
 
-\color{bodycolor}
+\color{supportingtext}
 \section{Training-Only Parameter Selection}
 
 All representation fitting uses the source training partition, while hyperparameter selection uses only the source training and validation partitions. Validation phishing-class F1 selects \((\gamma,\alpha)=(0.55,0.90)\) when training LitePhish on PhishStorm, \((0.30,0.95)\) when training on Ebbu2017, and \((0.55,0.95)\) when training on PhishFusion. Target-dataset labels are not used for feature selection, model selection, or fitting. LitePhish retains 568 selected features when trained on PhishFusion; the source-specific cross-dataset configurations retain 939 features for PhishStorm and 821 for Ebbu2017.
 
 Character 2-/3-gram selection uses \(d_{\min}=5\), \(r_{\max}=1.0\), variance threshold \(\tau=10^{-5}\), composite weight \(\beta=0.5\), L1-logistic inverse-regularization \(C_{\mathrm{ng}}=0.5\), and \(K_{\mathrm{ng}}=5,000\). SDCS uses \(S=20\) subsamples, a subsampling fraction of 0.905, L1-logistic inverse-regularization \(C_{\mathrm{SDCS}}=0.191\), coefficient-selection threshold \(|w_j|>10^{-5}\), \(\tau_{\mathrm{stab}}=0.705\), \(w_m=0.318\), \(w_s=0.767\), \(\rho_{\max}=0.956\), and \(K=1,000\). Mutual information is estimated from at most 20,000 source-training observations.
 
-\paragraph{Roy comparator.} \blue{The empirical comparator implements the all-manual-feature Random Forest configuration in Table II of Roy et al., rather than their separate TF--IDF configuration. Its 17 published URL descriptors are classified by 100 trees with seed 42. Standard RF settings and a fixed shortener-domain list specify implementation details not provided in that study. Comparisons therefore concern this published manual-feature configuration under the common evaluation protocol.}
+\paragraph{Comparator of Roy et al.} \blue{The empirical comparator implements the all-manual-feature Random Forest configuration in Table II of Roy et al., rather than their separate TF--IDF configuration. Its 17 published URL descriptors are classified by 100 trees with seed 42. Standard RF settings and a fixed shortener-domain list specify implementation details not provided in that study. Comparisons therefore concern this published manual-feature configuration under the common evaluation protocol.}
 
 \section{Detailed Ablation Results}
 
@@ -165,28 +165,28 @@ Standard LGBM, $F_{\mathrm{hc}}$+SDCS & 89.28 & 98.54 & 79.90 & 88.24 & 99.11 & 
 
 For the seed-42 PhishFusion paired analysis, the raw 56,601-feature representation and the 568-feature compact representation were evaluated under an identical one-core/512~MiB protocol. Table~\ref{tab:compact} separates the effects of feature selection on predictive performance, fitting time, storage, memory, and inference latency.
 
-{\color{bodycolor}
+{\color{supportingtext}
 A fixed-seed paired experiment evaluates representation compactness using seed 42, identical domain-disjoint partitions, focal parameters, and LightGBM hyperparameters for the raw and compact models. Selection increases accuracy from 97.47\% to 97.72\%, recall from 96.73\% to 97.45\%, F1-score from 97.70\% to 97.94\%, and ROC-AUC from 99.73\% to 99.77\%, while precision changes from 98.69\% to 98.44\%. Model-fitting time decreases from 70.31 to 15.43~s, a 78.1\% reduction (4.56$\times$).
 }
 
 \begin{table}[ht]
 \centering
-\caption{{\color{bodycolor}Direct resource and model-fitting comparison of raw and compact LitePhish representations. FE denotes URL-to-feature extraction; Total includes FE, preprocessing, and prediction. Inference values are medians over four independent profiling passes.}}
+\caption{{\color{supportingtext}Direct resource and model-fitting comparison of raw and compact LitePhish representations. FE denotes URL-to-feature extraction; Total includes FE, preprocessing, and prediction. Inference values are medians over four independent profiling passes.}}
 \label{tab:compact}
 \small
 \resizebox{\textwidth}{!}{\begin{tabular}{llrrrrrrr}
 \toprule
-Representation & Profile & Features & Bundle (MB) & {\color{bodycolor}Fit (s)} & Peak RSS (MiB) & {\color{bodycolor}FE (ms/URL)} & Total (ms/URL) & URL/s \\
+Representation & Profile & Features & Bundle (MB) & {\color{supportingtext}Fit (s)} & Peak RSS (MiB) & {\color{supportingtext}FE (ms/URL)} & Total (ms/URL) & URL/s \\
 \midrule
-Raw & Online & 56,601 & 4.385 & {\color{bodycolor}70.31} & 232.76 & {\color{bodycolor}1.233} & 3.188 & 313.7 \\
-Raw & Batched & 56,601 & 4.385 & {\color{bodycolor}--} & 232.36 & {\color{bodycolor}0.944} & 1.001 & 999.4 \\
-Compact & Online & 568 & 1.874 & {\color{bodycolor}15.43} & 227.25 & {\color{bodycolor}2.129} & 3.805 & 262.8 \\
-Compact & Batched & 568 & 1.874 & {\color{bodycolor}--} & 227.67 & {\color{bodycolor}0.933} & 1.008 & 991.9 \\
+Raw & Online & 56,601 & 4.385 & {\color{supportingtext}70.31} & 232.76 & {\color{supportingtext}1.233} & 3.188 & 313.7 \\
+Raw & Batched & 56,601 & 4.385 & {\color{supportingtext}--} & 232.36 & {\color{supportingtext}0.944} & 1.001 & 999.4 \\
+Compact & Online & 568 & 1.874 & {\color{supportingtext}15.43} & 227.25 & {\color{supportingtext}2.129} & 3.805 & 262.8 \\
+Compact & Batched & 568 & 1.874 & {\color{supportingtext}--} & 227.67 & {\color{supportingtext}0.933} & 1.008 & 991.9 \\
 \bottomrule
 \end{tabular}}
 \end{table}
 
-{\color{bodycolor}Resource values in Table~\ref{tab:compact} are medians across four profiling passes for the raw and compact models. The five-model benchmark in the main manuscript reports means across three passes. Because the model representations, timing boundaries, and aggregation differ, the values are compared within each protocol.}
+{\color{supportingtext}Resource values in Table~\ref{tab:compact} are medians across four profiling passes for the raw and compact models. The five-model benchmark in the main manuscript reports means across three passes. Because the model representations, timing boundaries, and aggregation differ, the values are compared within each protocol.}
 
 \section{Imbalance-Objective Analysis}
 
@@ -215,7 +215,7 @@ Ratio & Threshold & Baseline & Focal F1 & Baseline F1 & Difference (95\% CI) & H
 
 \section{Temporal and Failure-Case Evaluation}
 
-The prospective temporal cohort contains 290 confirmed OpenPhish URLs collected after the training cutoff. Because it contains no benign examples, only recall and score distributions are identifiable. LitePhish detects 256 URLs and misses 34, giving 88.28\% recall (Wilson 95\% CI: 84.06--91.49\%). The mean and median phishing probabilities are 0.868 and 0.996, respectively. The time-indexed LitePhish model trained on PhishFusion obtains 97.45\% recall on its internal positive test subset, which provides the in-distribution reference. {\color{bodycolor}Failure-stratum and counterfactual analyses use a separate seed-42 domain-disjoint model with 96.76\% phishing recall; each reference value is therefore interpreted within its own analysis.}
+The prospective temporal cohort contains 290 confirmed OpenPhish URLs collected after the training cutoff. Because it contains no benign examples, only recall and score distributions are identifiable. LitePhish detects 256 URLs and misses 34, giving 88.28\% recall (Wilson 95\% CI: 84.06--91.49\%). The mean and median phishing probabilities are 0.868 and 0.996, respectively. The time-indexed LitePhish model trained on PhishFusion obtains 97.45\% recall on its internal positive test subset, which provides the in-distribution reference. {\color{supportingtext}Failure-stratum and counterfactual analyses use a separate seed-42 domain-disjoint model with 96.76\% phishing recall; each reference value is therefore interpreted within its own analysis.}
 
 \begin{table}[ht]
 \centering
@@ -265,7 +265,7 @@ MUDS has 2.91 times the CPU-package URLs/J of LitePhish and also has the smalles
 
 \section{Paired Statistical Comparisons}
 
-Prediction-level comparisons span the three internal domain-disjoint datasets, four cross-dataset transfers, and the external cohort. Accuracy differences use exact McNemar tests and paired multinomial-bootstrap intervals; phishing-class F1 uses paired multinomial bootstrap; ROC-AUC uses paired DeLong tests. Holm correction is applied within each table and metric family. The analysis covers 72 LitePhish--baseline scenario pairs, excluding the separately reported Roy comparator. On the external {\color{bodycolor}93,788-URL cohort (42,335 phishing and 51,453 benign)}, LitePhish exceeds all nine baselines in accuracy, phishing-class F1, and ROC-AUC after Holm correction. {\color{bodycolor}The direction and significance of differences vary across individual metrics and source--target settings. LitePhish obtains the highest phishing-class F1 in all four transfers, whereas DEPHIDES and URLNet obtain the highest ROC-AUC in the two Ebbu2017-source transfers; the interpretation therefore distinguishes F1 performance from ranking performance.}
+Prediction-level comparisons span the three internal domain-disjoint datasets, four cross-dataset transfers, and the external cohort. Accuracy differences use exact McNemar tests and paired multinomial-bootstrap intervals; phishing-class F1 uses paired multinomial bootstrap; ROC-AUC uses paired DeLong tests. Holm correction is applied within each table and metric family. The analysis covers 72 LitePhish--baseline scenario pairs, excluding the separately reported comparator of Roy et al. On the external {\color{supportingtext}93,788-URL cohort (42,335 phishing and 51,453 benign)}, LitePhish exceeds all nine baselines in accuracy, phishing-class F1, and ROC-AUC after Holm correction. {\color{supportingtext}The direction and significance of differences vary across individual metrics and source--target settings. LitePhish obtains the highest phishing-class F1 in all four transfers, whereas the deep-learning models DEPHIDES and URLNet obtain the highest ROC-AUC in the two Ebbu2017-source transfers; the interpretation therefore distinguishes F1 performance from ranking performance.}
 
 \section{Merged-Corpus Keyword Analysis}
 
@@ -317,7 +317,7 @@ Figure~\ref{fig:merged_landscape} summarizes frequent lexical and domain-related
 The phishing root-domain union (44,025) is smaller than the component sum (16,716+8,922+18,640=44,278); the benign union (31,739) is smaller than 2,837+12,704+17,939=33,480. Cross-corpus repetition therefore cannot increase either class-specific domain count. Parsed path counts include the root path ``/''. The external 93,788-URL PhishTank/Common Crawl cohort is excluded from this descriptive development-corpus union.
 \end{bluechange}
 \begin{table}[ht]
-\centering\color{blue}\small
+\centering\color{black}\small
 \caption{Component-to-union accounting for descriptive keyword analysis. Removal counts denote duplicate occurrences, not distinct campaigns.}
 \label{tab:corpus_flow}
 \begin{tabular}{lrrrr}
@@ -437,7 +437,7 @@ The fixed PhishFusion partition contains 86,098 training, 8,278 validation, and 
 SDCS uses 20 internal subsamples, fraction .905, recurrence threshold .705, $C=.191$, MI weight .318, recurrence weight .767, and correlation cutoff .956, with at most 1,000 variables. MI uses at most 20,000 source observations. The mRMR-Pearson comparator prefilters to 1,500 MI-ranked variables and greedily maximizes normalized MI minus the largest absolute correlation with the selected set. It is this specified variant, not an unspecified generic mRMR implementation. The downstream classifier uses $(\gamma,\alpha)=(.30,.95)$, 500 trees, 50 leaves, learning rate .15, minimum child size 40, L1/L2 penalties .1/.3, and seed 42 for every method. No outcome determines the feature budget or classifier settings.
 \end{bluechange}
 \begin{table}[ht]
-\centering\color{blue}\small
+\centering\color{black}\small
 \caption{Ten-seed matched-budget selector comparison. Predictive metrics are percentages; recurrence uses pairwise Jaccard; selection time is seconds.}
 
 \begin{tabular}{lrrrrrr}
@@ -465,7 +465,7 @@ Three training phishing-to-benign ratios (1:3, 1:5, 1:10), ten paired seeds (42-
 For labels $y_i$ and phishing probabilities $p_i$, Brier score is $N^{-1}\sum_i(p_i-y_i)^2$, and log loss is $-N^{-1}\sum_i[y_i\log p_i+(1-y_i)\log(1-p_i)]$. With 15 equal-width bins $B_b$, $\mathrm{ECE}=\sum_b|B_b|N^{-1}|\overline p_b-\overline y_b|$. AP is the recall-increment-weighted average precision, not trapezoidal precision--recall area. MCC summarizes all four confusion-matrix cells as $(TP\,TN-FP\,FN)/\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}$.
 \end{bluechange}
 \begin{table}[ht]
-\centering\color{blue}\scriptsize
+\centering\color{black}\scriptsize
 \caption{Means over ten paired seeds. Raw, sigmoid-calibrated, and validation-threshold F1, AP and AUC are percentages. Brier, log loss and ECE use the raw probabilities.}
 \label{tab:probabilities}
 \begin{tabular}{lrrrrrrrrr}
@@ -511,7 +511,7 @@ Hostname-identity reduction removes seven identity/lookup descriptors and restri
 Primary full-URL evaluation excludes normalized-URL duplicates, conflicting normalized labels, and source-domain overlap using a common eligibility mask for all three models. The snapshot cohort retains 94,717 URLs (42,263 phishing; 52,454 benign), while the PhishTank cohort retains 41,761 (22,917 phishing; 18,844 benign). Their labels are inherited annotations, not verified live browsing. Snapshot source components overlap in collection history; these cohorts are not asserted to be strictly temporally independent. Popular-domain stress URLs already use HTTPS homepage syntax, so that result is not explained by an absent URL scheme.
 \end{bluechange}
 \begin{table}[ht]
-\centering\color{blue}\small
+\centering\color{black}\small
 \caption{Controlled representation comparison; predictive metrics are percentages.}
 
 \begin{tabular}{lrrrrrrr}
@@ -541,10 +541,10 @@ The external PhishTank evaluation contains 93,788 URLs (51,453 benign; 42,335 ph
 
 Frozen feature definitions and learned parameters are exported to inference-only ARM ports. LightGBM 4.5.0 uses its native runtime; the other ensembles retain their learned tree, SVM, naive-Bayes, and logistic-regression functions. Every prepared input, probability, and .5-threshold label is numerically checked against its reference, followed by 60 interleaved trials: six models, five repeats, batch sizes 1 and 100. The common schedule uses seed 20261019, 20 warm-up URLs, one numerical-library thread, and a fresh process for every runtime trial. Stage times separate URL feature construction, preprocessing, and classifier inference; initialization is separate.
 
-The Roy comparator uses its 17-feature best-effort Random Forest reproduction; the TabNet label denotes its selected-descriptor stacking ensemble. The ports are not author-provided mobile applications, and RSS differences include runtime assembly and representation overhead. Thermal controls postpone trials above 40\,${}^{\circ}$C and stop the energy workload at 43\,${}^{\circ}$C or battery charge at or below 25\%.
+The comparator of Roy et al. uses its 17-feature best-effort Random Forest reproduction; the TabNet label denotes its selected-descriptor stacking ensemble. The ports are not author-provided mobile applications, and RSS differences include runtime assembly and representation overhead. Thermal controls postpone trials above 40\,${}^{\circ}$C and stop the energy workload at 43\,${}^{\circ}$C or battery charge at or below 25\%.
 \end{bluechange}
 \begin{table}[ht]
-\centering\color{blue}\small
+\centering\color{black}\small
 \caption{Five-repeat phone runtime means. Stage costs are ms/URL; initialization is seconds and excluded from resident inference. Batch-100 costs are amortized per URL.}
 
 \begin{tabular}{lrrrrrrr}
@@ -553,13 +553,13 @@ Model & Batch & Features & Preprocess & Inference & Total & RSS (MiB) & Init. (s
 \midrule
 LitePhish & 1 & 2.820 & 0.123 & 0.736 & 3.679 & 69.02 & 0.168 \\
 MUDS & 1 & 0.423 & 0.003 & 0.234 & 0.660 & 68.25 & 0.140 \\
-Roy & 1 & 0.265 & 0.003 & 0.531 & 0.798 & 133.67 & 0.807 \\
+Roy et al. & 1 & 0.265 & 0.003 & 0.531 & 0.798 & 133.67 & 0.807 \\
 E2Phish & 1 & 0.259 & 0.096 & 3.690 & 4.045 & 59.14 & 0.194 \\
 TabNet & 1 & 0.975 & 0.215 & 3.291 & 4.480 & 148.30 & 0.891 \\
 Ebbu & 1 & 24.150 & 0.006 & 0.462 & 24.618 & 152.48 & 1.671 \\
 LitePhish & 100 & 2.200 & 0.034 & 0.101 & 2.335 & 69.32 & 0.174 \\
 MUDS & 100 & 0.308 & 0.000 & 0.022 & 0.331 & 68.33 & 0.147 \\
-Roy & 100 & 0.119 & 0.000 & 0.190 & 0.310 & 133.66 & 0.738 \\
+Roy et al. & 100 & 0.119 & 0.000 & 0.190 & 0.310 & 133.66 & 0.738 \\
 E2Phish & 100 & 0.083 & 0.002 & 2.396 & 2.480 & 59.34 & 0.173 \\
 TabNet & 100 & 0.722 & 0.007 & 1.877 & 2.606 & 148.26 & 1.092 \\
 Ebbu & 100 & 24.098 & 0.000 & 0.014 & 24.112 & 152.35 & 1.920 \\
@@ -573,7 +573,7 @@ Battery measurements use airplane mode, USB disconnected, fixed dim display (bri
 All assigned trials retain prediction agreement. Ebbu covers 4,923--4,989 distinct URLs within its duration-limited trials; faster models cycle through the complete 5,000-URL pool. Thus, all models share the frozen ordered pool and duration protocol, not identical executed-URL counts. Loading energy is excluded. Continuous telemetry, discharge state, radio settings, temperature, clock continuity, and prediction equivalence are verified for each assigned trial. The signed-current integral is approximately twice the change in the reported charge counter, but that counter is nearly proportional to integer battery percentage. It is not an independent calibration reference; no factor-of-two rescaling is applied. Absolute fuel-gauge accuracy remains unknown.
 \end{bluechange}
 \begin{table}[ht]
-\centering\color{blue}\small
+\centering\color{black}\small
 \caption{Phone battery-side measurements over five repeats. Power is in W; energy is in mJ/URL. SD describes repeat variability, not sensor calibration uncertainty.}
 
 \begin{tabular}{lrrrrrr}
@@ -582,7 +582,7 @@ Model & Load power & Idle power & Gross mean & Gross SD & Incremental mean & Inc
 \midrule
 LitePhish & 2.046 & 1.124 & 6.084 & 0.171 & 2.739 & 0.148 \\
 MUDS & 2.051 & 1.133 & 1.137 & 0.050 & 0.508 & 0.039 \\
-Roy & 2.056 & 1.072 & 1.190 & 0.060 & 0.570 & 0.043 \\
+Roy et al. & 2.056 & 1.072 & 1.190 & 0.060 & 0.570 & 0.043 \\
 E2Phish & 2.465 & 1.127 & 8.993 & 0.377 & 4.882 & 0.432 \\
 TabNet & 2.408 & 1.126 & 8.665 & 0.241 & 4.612 & 0.412 \\
 Ebbu & 2.133 & 1.086 & 51.724 & 1.446 & 25.383 & 1.331 \\
@@ -592,7 +592,7 @@ Ebbu & 2.133 & 1.086 & 51.724 & 1.446 & 25.383 & 1.331 \\
 
 \section{Detection--Resource Frontiers}
 \begin{bluechange}
-The primary five-dimensional comparison maximizes accuracy and minimizes FPR, batch-1 latency, peak RSS, and gross energy on the common phone workload. A model is non-dominated when no other model is at least as good in every objective and strictly better in at least one. No arbitrary objective weights are applied. LitePhish, MUDS, E2Phish, TabNet, and Ebbu form the mean-coordinate non-dominated set; MUDS dominates the Roy reproduction at these mean coordinates. The set is unchanged using F1 instead of accuracy or incremental instead of gross energy. In observed-repeat-envelope comparisons, no full five-dimensional dominance is established, reflecting resource variability. The separate batch-100 comparison uses four objectives and does not borrow batch-1 energy; all six models are non-dominated there.
+The primary five-dimensional comparison maximizes accuracy and minimizes FPR, batch-1 latency, peak RSS, and gross energy on the common phone workload. A model is non-dominated when no other model is at least as good in every objective and strictly better in at least one. No arbitrary objective weights are applied. LitePhish, MUDS, E2Phish, TabNet, and Ebbu form the mean-coordinate non-dominated set; MUDS dominates the reproduction of Roy et al. at these mean coordinates. The set is unchanged using F1 instead of accuracy or incremental instead of gross energy. In observed-repeat-envelope comparisons, no full five-dimensional dominance is established, reflecting resource variability. The separate batch-100 comparison uses four objectives and does not borrow batch-1 energy; all six models are non-dominated there.
 
 The accuracy--latency and accuracy--energy projections contain LitePhish, MUDS, and Ebbu on their frontiers. The FPR projections instead favor MUDS and TabNet. A projection frontier is not a substitute for full-dimensional dominance. LitePhish trades additional cost and FPR relative to MUDS for higher phishing recall; relative to Ebbu, it reduces cost while sacrificing some accuracy on this workload. These are operating choices on one device and population, not calibrated estimates of universal deployment benefit.
 \end{bluechange}
@@ -606,7 +606,7 @@ The accuracy--latency and accuracy--energy projections contain LitePhish, MUDS, 
 The x86-64 latency and CPU-package energy protocols are separate from the physical-phone protocol. Online means URL-at-a-time inference (batch size one), not online training or live network access. The raw and compact paths use different sparse/dense assembly costs, so feature reduction is not interpreted as an isolated latency intervention. The x86 values and repeated domain-split summaries follow.
 \begin{table}[!t]
 \centering
-\caption{Common-protocol resource comparison of models trained on PhishFusion. Latency and memory were measured on fixed-seed external URLs under a one-core/512~MiB x86-64 profile; CPU-package energy was measured separately on an Intel Core i7-9700 using five randomized, duration-controlled trials. FE denotes feature extraction. Energy intervals are 95\% Student-$t$ confidence intervals. Roy is evaluated on the physical smartphone; no x86 measurement is assigned to that row.}
+\caption{Common-protocol resource comparison of models trained on PhishFusion. Latency and memory were measured on fixed-seed external URLs under a one-core/512~MiB x86-64 profile; CPU-package energy was measured separately on an Intel Core i7-9700 using five randomized, duration-controlled trials. FE denotes feature extraction. Energy intervals are 95\% Student-$t$ confidence intervals. The model of Roy et al. is evaluated on the physical smartphone; no x86 measurement is assigned to that row.}
 \label{tab:inference_time}
 \scriptsize
 \setlength{\tabcolsep}{4pt}
@@ -663,6 +663,112 @@ The following local decompositions complement the global SHAP analysis. Feature 
     \caption{Local decision decomposition. \textbf{(A)} Phishing: high TLD risk and suspicious tokens. \textbf{(B)} Legitimate: low-risk structural patterns and low entropy. \textbf{(C)} Borderline: structural risks offset by low-risk lexical and structural signals.}
 \label{fig:local_waterfall}
 \end{figure}
+\end{bluechange}
+
+
+\clearpage
+\section{\color{black}External Evaluation on PhreshPhish}
+\label{sec:phreshphish}
+\begin{bluechange}
+\subsection{Population and eligibility}
+PhreshPhish is a public phishing-website dataset released by Dalton et al. (arXiv:2507.10854). Its benign observations combine anonymized browsing telemetry and search-derived URLs; the released labels are retained. Dataset-level quality control does not imply individual human verification of every URL, and the curated class distribution is not an estimate of browsing prevalence. We use the released test split at version \texttt{eca603e0ecd4f698f8d4d226c088659e72681239}, containing 91,260 benign and 76,800 phishing URLs. No webpage content is retrieved or used for inference. This dataset is separate from the 93,788-URL PhishTank evaluation and the 5,000-URL resource workload.
+
+Eligibility is determined before model evaluation. We exclude invalid or non-HTTP(S) inputs, normalized-label conflicts, later occurrences of normalized duplicates, and exact or normalized URL overlap with the complete 105,752-row PhishFusion source corpus. Normalization is used only for overlap checks: it decodes HTML entities, trims surrounding whitespace, lowercases the hostname, ignores scheme and fragment, and retains explicit ports and path/query content. An empty path is represented by ``/''. The original URL string remains the classifier input. Source overlap checks cover both UTF-8 and legacy Latin-1 interpretations of the source URLs. Table~\ref{tab:phresh_accounting} gives the resulting populations. The stricter subset additionally excludes source registered-domain overlap using a common offline Public Suffix List with private suffixes included.
+
+\begin{table}[!ht]
+\centering\small\color{black}
+\caption{\color{black}PhreshPhish evaluation populations. Eligibility is identical for every evaluated model.}
+\label{tab:phresh_accounting}
+\begin{tabular}{lrrr}
+\toprule
+Population & Benign & Phishing & Total \\
+\midrule
+Released test split & 91,260 & 76,800 & 168,060 \\
+Eligible URL-disjoint cohort & 89,686 & 76,541 & 166,227 \\
+Source-domain-disjoint subset & 67,421 & 74,202 & 141,623 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Pretrained-model comparison}
+The PhishFusion-trained LitePhish model uses its existing 568-feature representation. MUDS, E2Phish, TabNet and Ebbu retain their trained classifiers and feature preprocessing; The model of Roy et al. uses the 17-feature, 100-tree Random Forest reproduction trained on the canonical PhishFusion partition. TabNet denotes descriptor selection followed by the final stacking classifier. Ebbu retains its fixed lexical lists and gibberish-scoring state. All models use the same raw URL inputs and common eligibility masks, with a decision threshold of 0.5. No parameters, vocabularies, feature selection, or preprocessing are fitted to PhreshPhish. These comparisons concern the specified implementations, including the best-effort reproduction of Roy et al.
+
+The main manuscript reports the complete URL-disjoint comparison. Table~\ref{tab:phresh_domain} reports the stricter source-domain-disjoint subset. LitePhish obtains the highest accuracy, recall, F1, and ROC-AUC among the six methods in both populations. Its F1 advantage over the strongest baseline, Ebbu, is 5.56 percentage points in the URL-disjoint cohort and 5.39 points in the domain-disjoint subset. Differences are calculated before rounding. E2Phish and MUDS provide lower false-positive rates, with lower phishing recall. These results describe complementary operating characteristics under a common threshold.
+
+\begin{table}[!ht]
+\centering\small\color{black}
+\caption{\color{black}PhreshPhish source-domain-disjoint comparison at threshold 0.5. Metrics are percentages; lower FPR is preferred.}
+\label{tab:phresh_domain}
+\begin{tabular}{lrrrrrr}
+\toprule
+Model & Accuracy & Precision & Recall & F1 & ROC-AUC & FPR \\
+\midrule
+LitePhish & \textbf{86.64} & 84.40 & \textbf{91.39} & \textbf{87.75} & \textbf{93.60} & 18.60 \\
+MUDS & 80.60 & \textbf{90.12} & 70.74 & 79.26 & 91.10 & 8.54 \\
+Roy et al. & 81.06 & 86.52 & 75.64 & 80.71 & 88.50 & 12.97 \\
+E2Phish & 76.01 & 89.31 & 61.59 & 72.91 & 87.33 & \textbf{8.12} \\
+TabNet & 75.60 & 75.79 & 78.50 & 77.12 & 80.24 & 27.60 \\
+Ebbu & 80.57 & 78.51 & 86.62 & 82.36 & 86.55 & 26.10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Source-selected operating points}
+To examine threshold transfer, thresholds are selected exclusively from the 4,447 benign observations in the 8,278-row source-validation partition. For an FPR budget $b$, we allow at most $\lfloor b n_{\mathrm{benign}}\rfloor$ validation false positives and select the smallest representable threshold above the next descending benign score. Decisions use $p\geq t$, so boundary ties are excluded. These source-validation budgets are not constraints on the external FPR. Table~\ref{tab:phresh_thresholds} reports all four operating points for the existing 568-feature LitePhish model. No threshold is selected using external labels.
+
+\begin{table}[!ht]
+\centering\small\color{black}
+\caption{\color{black}Source-selected LitePhish operating points on PhreshPhish. FPR, recall and F1 are percentages.}
+\label{tab:phresh_thresholds}
+\begin{tabular}{lrrrrrrr}
+\toprule
+& & \multicolumn{3}{c}{URL-disjoint} & \multicolumn{3}{c}{Domain-disjoint} \\
+Rule & Threshold & FPR & Recall & F1 & FPR & Recall & F1 \\
+\midrule
+Fixed 0.5 & .500000 & 15.19 & 90.76 & 87.04 & 18.60 & 91.39 & 87.75 \\
+Validation FPR $\leq1\%$ & .748356 & 10.37 & 86.26 & 86.95 & 12.90 & 87.00 & 87.56 \\
+Validation FPR $\leq0.5\%$ & .935999 & 5.43 & 74.83 & 82.60 & 6.88 & 75.42 & 83.03 \\
+Validation FPR $\leq0.1\%$ & .998473 & .49 & 31.47 & 47.67 & .60 & 31.77 & 48.02 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The stricter source threshold reduces external false positives at the expense of phishing recall. At the 0.1\% validation-FPR rule, the observed URL-disjoint FPR is 0.49\% and recall is 31.47\%; the corresponding domain-disjoint values are 0.60\% and 31.77\%. Domain-cluster bootstrap intervals use 2,000 paired resamples of registered domains, keeping URLs from each sampled domain together. They describe fixed-model variation within these curated populations rather than uncertainty across training runs or all consumer browsing. Table~\ref{tab:phresh_controlled} reports the three controlled source-trained representation conditions, whose feature construction and fitting follow Section 14.
+
+\begin{longtable}{llrrrrr}
+\caption{\color{black}Controlled source-trained representations on PhreshPhish. FPR, recall and F1 are percentages. Each representation retains its source-only fit; ``1'', ``0.5'' and ``0.1'' denote the validation FPR budget (\%).}\label{tab:phresh_controlled}\\
+\toprule
+Population & Representation & Rule & Threshold & FPR & Recall & F1 \\
+\midrule
+\endfirsthead
+\toprule Population & Representation & Rule & Threshold & FPR & Recall & F1 \\
+\midrule\endhead
+URL-disjoint & Original & Fixed & 0.500000 & 16.76 & 91.81 & 86.84 \\
+URL-disjoint & Original & 1 & 0.728393 & 10.26 & 87.47 & 87.69 \\
+URL-disjoint & Original & 0.5 & 0.919299 & 4.75 & 76.14 & 83.81 \\
+URL-disjoint & Original & 0.1 & 0.995483 & 0.50 & 36.37 & 53.11 \\
+URL-disjoint & Source-balanced & Fixed & 0.500000 & 18.18 & 91.51 & 86.00 \\
+URL-disjoint & Source-balanced & 1 & 0.753398 & 12.01 & 86.33 & 86.16 \\
+URL-disjoint & Source-balanced & 0.5 & 0.914083 & 6.87 & 77.36 & 83.44 \\
+URL-disjoint & Source-balanced & 0.1 & 0.993603 & 1.17 & 48.39 & 64.63 \\
+URL-disjoint & Identity-reduced & Fixed & 0.500000 & 16.04 & 89.04 & 85.68 \\
+URL-disjoint & Identity-reduced & 1 & 0.725851 & 11.02 & 82.48 & 84.42 \\
+URL-disjoint & Identity-reduced & 0.5 & 0.931471 & 4.97 & 67.31 & 77.76 \\
+URL-disjoint & Identity-reduced & 0.1 & 0.994989 & 0.94 & 36.10 & 52.63 \\
+Domain-disjoint & Original & Fixed & 0.500000 & 20.57 & 92.42 & 87.56 \\
+Domain-disjoint & Original & 1 & 0.728393 & 12.78 & 88.16 & 88.26 \\
+Domain-disjoint & Original & 0.5 & 0.919299 & 6.01 & 76.78 & 84.26 \\
+Domain-disjoint & Original & 0.1 & 0.995483 & 0.61 & 36.78 & 53.56 \\
+Domain-disjoint & Source-balanced & Fixed & 0.500000 & 22.16 & 92.08 & 86.78 \\
+Domain-disjoint & Source-balanced & 1 & 0.753398 & 14.94 & 86.99 & 86.75 \\
+Domain-disjoint & Source-balanced & 0.5 & 0.914083 & 8.68 & 77.98 & 83.91 \\
+Domain-disjoint & Source-balanced & 0.1 & 0.993603 & 1.46 & 49.01 & 65.20 \\
+Domain-disjoint & Identity-reduced & Fixed & 0.500000 & 19.26 & 89.56 & 86.51 \\
+Domain-disjoint & Identity-reduced & 1 & 0.725851 & 13.53 & 83.02 & 85.02 \\
+Domain-disjoint & Identity-reduced & 0.5 & 0.931471 & 6.29 & 67.69 & 78.07 \\
+Domain-disjoint & Identity-reduced & 0.1 & 0.994989 & 1.16 & 36.57 & 53.15 \\
+\bottomrule
+\end{longtable}
 \end{bluechange}
 
 \end{document}

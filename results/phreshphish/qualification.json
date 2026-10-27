@@ -1,0 +1,14 @@
+{
+  "rows_per_model": 100,
+  "maximum_probability_errors": {
+    "frozen_568": 0.0,
+    "MUDS": 0.0,
+    "Roy": 0.0,
+    "E2Phish": 0.0,
+    "TabNet": 0.0,
+    "Ebbu": 0.0,
+    "original": 0.0,
+    "source_nuisance_balanced": 0.0,
+    "hostname_independent": 0.0
+  }
+}

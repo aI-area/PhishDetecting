@@ -1,0 +1,3 @@
+label,released_rows,valid_http,source_exact_url_overlap,source_normalized_url_overlap,source_domain_overlap,normalized_label_conflicts,normalized_later_duplicates,eligible_url_disjoint,eligible_domain_disjoint
+0,91260,89708,14,16,22752,0,13,89686,67421
+1,76800,76800,2,3,2356,0,256,76541,74202

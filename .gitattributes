@@ -4,10 +4,13 @@
 *.py text eol=lf
 *.sh text eol=lf
 *.md text eol=lf
+*.json text eol=lf
 *.tex text eol=lf
 *.csv -text
 *.gz -text
 *.npz -text
+*.npy -text
+*.joblib -text
 *.pkl -text
 *.pdf -text
 results/** -text

@@ -1,0 +1,16 @@
+{
+  "objective_operating_points.csv": "3f2d28cc0b7691b8109a15116e47710f95c4767998e8a935c20be57499a8fbd0",
+  "objective_summary.csv": "98bd5d8ebd1a8835b7bae4c9201be3f43a96f969a815942136a7eb70b3db1740",
+  "objective_thresholds.csv": "f2d9f2476dd68304ac04223305e9af810f502e2969585f71bca26380211e5c1d",
+  "paired_comparisons.csv": "2e958a3ca56f9b28d4a63ce137245c02221d24d8d815c1481b723288fc4fe80b",
+  "README.md": "43c05057897a834b8eec8442ed953bbb03d4389589aceb60812da3cca82e287f",
+  "shift_operating_points.csv": "74ef53b4611346e2d779b5e6de931d754342cc646c5d429d5420e09254b4fa29",
+  "source_reference/evaluation_full/ExpertFusion_TE6_paired_predictions.csv.gz": "86a8dbd2dc2cbe2a7fa6fab9e3b380d82d67a50a7dfbcb2f5b3affe7ac307819",
+  "source_reference/evaluation_full/historical_popular_dns_proxy_paired_predictions.csv.gz": "cc165eee0017a8451e7f882d54056b706e67d05b9564003fb4d757693508f603",
+  "source_reference/evaluation_full/historical_positive_temporal_paired_predictions.csv.gz": "5885d18a334a38efd710535a389cf7fa9e57c3c039f2bede14d6265697ca79c3",
+  "source_reference/evaluation_full/LitePhish_PhishTank_paired_predictions.csv.gz": "5e93801388c9b5631864cbf51da2f355cfd9e277bae365bde931e6eed5756b2c",
+  "source_reference/evaluation_full/source_heldout_paired_predictions.csv.gz": "ca04c4c013a7ca434ed8cd60d58c9bf08c51395ec9bfe1405182c7e979764e42",
+  "source_reference/full_source/hostname_independent_validation_predictions.csv": "a97fa7b11495a4ce7780341629c9c35fd573a1a466367fb4cde443ac46c2dc6e",
+  "source_reference/full_source/original_validation_predictions.csv": "1463539c7b067484578686528438fc9b9b467c29d24d059728b2c6033e1237b2",
+  "source_reference/full_source/source_nuisance_balanced_validation_predictions.csv": "378b0e81e9379eb7868b3110705d7fb1d81b2e667bc47deb3697b1c8fefcbca9"
+}

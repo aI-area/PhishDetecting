@@ -1,0 +1,11 @@
+{
+  "baseline_summary.csv": "b7052b4b12210f7d3dded095db6bde80ac73a724c307264b64416d23f2688a1b",
+  "domain_fpr_differences.csv": "d3abcbdfcca36ad627ef3b12e413058fe93e785f399117ee6df075ad347a0465",
+  "domain_fpr_intervals.csv": "666883ed2739c7c809bf286c3a648f4b966ca7d32d07ab6a589ed86f303667c7",
+  "eligibility_accounting.csv": "25f3cc02ee4055caed892f71d440f54a6496b07eae777095bc334e583192f238",
+  "operating_points.csv": "8e2ddabfc4cabf912ecfdfb1b1f680fa7f92caf8a99504504fd556f95123a359",
+  "predictions.csv.gz": "1c0535abd95bc739968653a6e368cf23e4d0f9f1a6e909d6994aa3614f710ee9",
+  "qualification.json": "0362f9a14eaac01f356d6a60b0c97ff41c4eaac82d632fdb45c70a15ede6a061",
+  "source_validation_probabilities.csv.gz": "7f5579352dc500b95c7d19baa459230c08d7a8d1154d7fa04d6f89579978076b",
+  "thresholds.csv": "0e013343667b234511f5d08433e7994ba71c7979b49f91e9a07632cb3898754e"
+}

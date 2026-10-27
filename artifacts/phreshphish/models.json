@@ -1,0 +1,47 @@
+{
+  "MUDS": {
+    "model": "baselines/MUDS/model.joblib.gz",
+    "original_model_sha256": "ad688e894f81f0c35072128e08fb641c579bc5a80253b1c465af0d17af0ec863",
+    "compressed_sha256": "b99a6f7ca991ae697d31d96891d7f63c88860ccb244e3c14939b3ac7e8bf9b0f",
+    "feature_sha256": "fdd6fd4efe99e91bdc62d76fadb3e2aee1ba651e697ee9bcd99cafa4c07b1336"
+  },
+  "Roy": {
+    "model": "baselines/Roy/model.joblib.gz",
+    "original_model_sha256": "5380cff803ad59353c558c729fa94c793295c6409d20eff19ff4146fb5ecb9b5",
+    "compressed_sha256": "4439ada8173c592bf7dd2c580a9c8a63ddc6fb4192d6d4ae0aca70f32d14b769",
+    "feature_sha256": "ec783dbcce59c378cac82a981825b2da83ff50ff19f9043c62e74a995bf8e62c"
+  },
+  "E2Phish": {
+    "model": "baselines/E2Phish/model.joblib.gz",
+    "original_model_sha256": "f002e2c732aa3d89fcdeff01e767b29da1ca3855386c5b8ebc62739e2b35af12",
+    "compressed_sha256": "d1e5d9c9cdec50ab37d67046e189390fb6d411d24507ac129f886890ce06c51c",
+    "feature_sha256": "aa717791815bb7da9807b79872f542a82c83cd3c6dc0094fce91b991b517e2ee"
+  },
+  "TabNet": {
+    "model": "baselines/TabNet/model.joblib.gz",
+    "original_model_sha256": "86293f63e0bf2499ffd49528bc743e17d9a9cf826ae814ebf8ebe5db45a2f369",
+    "compressed_sha256": "e38a43fc88eba262d70611f63efc706489d752052a886bf346a0b4c6c000b2ec",
+    "feature_sha256": "af2e9a1f7404e70357d2e6e9bd70e2ca529fd8b5adb729ef7b770625263c07d1"
+  },
+  "Ebbu": {
+    "model": "baselines/Ebbu/model.joblib.gz",
+    "original_model_sha256": "88e90d9aabc80bceeded2d5724524b8b3ed2b1a94ca00377aaf5edb23b36007e",
+    "compressed_sha256": "46904d141645663e36161d2a33a49cd9c8441acad704ba300aea7c7c5492d6f7",
+    "feature_sha256": "4cc59e7909f5117207d32a323be114d04eaf86fdeb464de4ea0383afd88d8481"
+  },
+  "original": {
+    "model": "representations/original.joblib.gz",
+    "original_model_sha256": "a4ef73d16ecb265044ac1c18d4d9f9c71bef5e79ec260999fc3e6c54f8292626",
+    "compressed_sha256": "d2a857cf37733951e50c6ec4a80533ff343397ce028999ff7d1016dcec273f8d"
+  },
+  "source_nuisance_balanced": {
+    "model": "representations/source_nuisance_balanced.joblib.gz",
+    "original_model_sha256": "8fef13bc42fecf226a6a3f64ffb1dfa6691627a6b9ab606adc7f3b01b069ff1a",
+    "compressed_sha256": "3694b4272e8b9ffdca0323d423ac03fc652e82d9e95ca0a87a79b50bdcf93dff"
+  },
+  "hostname_independent": {
+    "model": "representations/hostname_independent.joblib.gz",
+    "original_model_sha256": "8fbd62b91f9f753b3d837e8ecb1a32f1f1205810fc8972c38707306c2e7ae04b",
+    "compressed_sha256": "bbcb214237bee2ea1cc041aab8b392906e65610ba146131e07539a102e2f99ed"
+  }
+}

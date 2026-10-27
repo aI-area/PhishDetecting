@@ -1,0 +1,26 @@
+{
+  "version": "eca603e0ecd4f698f8d4d226c088659e72681239",
+  "shards": [
+    "data/test-000.parquet",
+    "data/test-001.parquet",
+    "data/test-002.parquet",
+    "data/test-003.parquet",
+    "data/test-004.parquet",
+    "data/test-005.parquet",
+    "data/test-006.parquet",
+    "data/test-007.parquet",
+    "data/test-008.parquet",
+    "data/test-009.parquet",
+    "data/test-010.parquet",
+    "data/test-011.parquet",
+    "data/test-012.parquet",
+    "data/test-013.parquet",
+    "data/test-014.parquet",
+    "data/test-015.parquet",
+    "data/test-016.parquet",
+    "data/test-017.parquet",
+    "data/test-018.parquet",
+    "data/test-019.parquet",
+    "data/test-020.parquet"
+  ]
+}

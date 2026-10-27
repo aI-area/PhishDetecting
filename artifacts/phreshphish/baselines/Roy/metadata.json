@@ -1,0 +1,932 @@
+{
+  "name": "Roy",
+  "feature_port": "Original scalar feature definitions with numerical equivalence validation",
+  "retraining": false,
+  "reproduction_boundary": "17-feature Random Forest best-effort reproduction; authors did not provide complete RF settings or URL normalization code.",
+  "feature_columns": [
+    "url_length",
+    "hostname_length",
+    "path_length",
+    "top_level_domain_length",
+    "underscore_count",
+    "at_count",
+    "question_mark_count",
+    "percent_count",
+    "dot_count",
+    "equals_count",
+    "http_count",
+    "https_count",
+    "letter_count",
+    "www_count",
+    "digit_count",
+    "uses_ip_address",
+    "uses_shortening_service"
+  ],
+  "estimator": {
+    "kind": "RandomForestClassifier",
+    "children": [
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_0_left",
+        "right": "model_tree_0_right",
+        "feature": "model_tree_0_feature",
+        "threshold": "model_tree_0_threshold",
+        "probability": "model_tree_0_probability",
+        "missing_left": "model_tree_0_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_1_left",
+        "right": "model_tree_1_right",
+        "feature": "model_tree_1_feature",
+        "threshold": "model_tree_1_threshold",
+        "probability": "model_tree_1_probability",
+        "missing_left": "model_tree_1_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_2_left",
+        "right": "model_tree_2_right",
+        "feature": "model_tree_2_feature",
+        "threshold": "model_tree_2_threshold",
+        "probability": "model_tree_2_probability",
+        "missing_left": "model_tree_2_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_3_left",
+        "right": "model_tree_3_right",
+        "feature": "model_tree_3_feature",
+        "threshold": "model_tree_3_threshold",
+        "probability": "model_tree_3_probability",
+        "missing_left": "model_tree_3_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_4_left",
+        "right": "model_tree_4_right",
+        "feature": "model_tree_4_feature",
+        "threshold": "model_tree_4_threshold",
+        "probability": "model_tree_4_probability",
+        "missing_left": "model_tree_4_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_5_left",
+        "right": "model_tree_5_right",
+        "feature": "model_tree_5_feature",
+        "threshold": "model_tree_5_threshold",
+        "probability": "model_tree_5_probability",
+        "missing_left": "model_tree_5_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_6_left",
+        "right": "model_tree_6_right",
+        "feature": "model_tree_6_feature",
+        "threshold": "model_tree_6_threshold",
+        "probability": "model_tree_6_probability",
+        "missing_left": "model_tree_6_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_7_left",
+        "right": "model_tree_7_right",
+        "feature": "model_tree_7_feature",
+        "threshold": "model_tree_7_threshold",
+        "probability": "model_tree_7_probability",
+        "missing_left": "model_tree_7_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_8_left",
+        "right": "model_tree_8_right",
+        "feature": "model_tree_8_feature",
+        "threshold": "model_tree_8_threshold",
+        "probability": "model_tree_8_probability",
+        "missing_left": "model_tree_8_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_9_left",
+        "right": "model_tree_9_right",
+        "feature": "model_tree_9_feature",
+        "threshold": "model_tree_9_threshold",
+        "probability": "model_tree_9_probability",
+        "missing_left": "model_tree_9_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_10_left",
+        "right": "model_tree_10_right",
+        "feature": "model_tree_10_feature",
+        "threshold": "model_tree_10_threshold",
+        "probability": "model_tree_10_probability",
+        "missing_left": "model_tree_10_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_11_left",
+        "right": "model_tree_11_right",
+        "feature": "model_tree_11_feature",
+        "threshold": "model_tree_11_threshold",
+        "probability": "model_tree_11_probability",
+        "missing_left": "model_tree_11_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_12_left",
+        "right": "model_tree_12_right",
+        "feature": "model_tree_12_feature",
+        "threshold": "model_tree_12_threshold",
+        "probability": "model_tree_12_probability",
+        "missing_left": "model_tree_12_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_13_left",
+        "right": "model_tree_13_right",
+        "feature": "model_tree_13_feature",
+        "threshold": "model_tree_13_threshold",
+        "probability": "model_tree_13_probability",
+        "missing_left": "model_tree_13_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_14_left",
+        "right": "model_tree_14_right",
+        "feature": "model_tree_14_feature",
+        "threshold": "model_tree_14_threshold",
+        "probability": "model_tree_14_probability",
+        "missing_left": "model_tree_14_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_15_left",
+        "right": "model_tree_15_right",
+        "feature": "model_tree_15_feature",
+        "threshold": "model_tree_15_threshold",
+        "probability": "model_tree_15_probability",
+        "missing_left": "model_tree_15_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_16_left",
+        "right": "model_tree_16_right",
+        "feature": "model_tree_16_feature",
+        "threshold": "model_tree_16_threshold",
+        "probability": "model_tree_16_probability",
+        "missing_left": "model_tree_16_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_17_left",
+        "right": "model_tree_17_right",
+        "feature": "model_tree_17_feature",
+        "threshold": "model_tree_17_threshold",
+        "probability": "model_tree_17_probability",
+        "missing_left": "model_tree_17_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_18_left",
+        "right": "model_tree_18_right",
+        "feature": "model_tree_18_feature",
+        "threshold": "model_tree_18_threshold",
+        "probability": "model_tree_18_probability",
+        "missing_left": "model_tree_18_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_19_left",
+        "right": "model_tree_19_right",
+        "feature": "model_tree_19_feature",
+        "threshold": "model_tree_19_threshold",
+        "probability": "model_tree_19_probability",
+        "missing_left": "model_tree_19_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_20_left",
+        "right": "model_tree_20_right",
+        "feature": "model_tree_20_feature",
+        "threshold": "model_tree_20_threshold",
+        "probability": "model_tree_20_probability",
+        "missing_left": "model_tree_20_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_21_left",
+        "right": "model_tree_21_right",
+        "feature": "model_tree_21_feature",
+        "threshold": "model_tree_21_threshold",
+        "probability": "model_tree_21_probability",
+        "missing_left": "model_tree_21_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_22_left",
+        "right": "model_tree_22_right",
+        "feature": "model_tree_22_feature",
+        "threshold": "model_tree_22_threshold",
+        "probability": "model_tree_22_probability",
+        "missing_left": "model_tree_22_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_23_left",
+        "right": "model_tree_23_right",
+        "feature": "model_tree_23_feature",
+        "threshold": "model_tree_23_threshold",
+        "probability": "model_tree_23_probability",
+        "missing_left": "model_tree_23_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_24_left",
+        "right": "model_tree_24_right",
+        "feature": "model_tree_24_feature",
+        "threshold": "model_tree_24_threshold",
+        "probability": "model_tree_24_probability",
+        "missing_left": "model_tree_24_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_25_left",
+        "right": "model_tree_25_right",
+        "feature": "model_tree_25_feature",
+        "threshold": "model_tree_25_threshold",
+        "probability": "model_tree_25_probability",
+        "missing_left": "model_tree_25_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_26_left",
+        "right": "model_tree_26_right",
+        "feature": "model_tree_26_feature",
+        "threshold": "model_tree_26_threshold",
+        "probability": "model_tree_26_probability",
+        "missing_left": "model_tree_26_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_27_left",
+        "right": "model_tree_27_right",
+        "feature": "model_tree_27_feature",
+        "threshold": "model_tree_27_threshold",
+        "probability": "model_tree_27_probability",
+        "missing_left": "model_tree_27_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_28_left",
+        "right": "model_tree_28_right",
+        "feature": "model_tree_28_feature",
+        "threshold": "model_tree_28_threshold",
+        "probability": "model_tree_28_probability",
+        "missing_left": "model_tree_28_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_29_left",
+        "right": "model_tree_29_right",
+        "feature": "model_tree_29_feature",
+        "threshold": "model_tree_29_threshold",
+        "probability": "model_tree_29_probability",
+        "missing_left": "model_tree_29_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_30_left",
+        "right": "model_tree_30_right",
+        "feature": "model_tree_30_feature",
+        "threshold": "model_tree_30_threshold",
+        "probability": "model_tree_30_probability",
+        "missing_left": "model_tree_30_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_31_left",
+        "right": "model_tree_31_right",
+        "feature": "model_tree_31_feature",
+        "threshold": "model_tree_31_threshold",
+        "probability": "model_tree_31_probability",
+        "missing_left": "model_tree_31_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_32_left",
+        "right": "model_tree_32_right",
+        "feature": "model_tree_32_feature",
+        "threshold": "model_tree_32_threshold",
+        "probability": "model_tree_32_probability",
+        "missing_left": "model_tree_32_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_33_left",
+        "right": "model_tree_33_right",
+        "feature": "model_tree_33_feature",
+        "threshold": "model_tree_33_threshold",
+        "probability": "model_tree_33_probability",
+        "missing_left": "model_tree_33_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_34_left",
+        "right": "model_tree_34_right",
+        "feature": "model_tree_34_feature",
+        "threshold": "model_tree_34_threshold",
+        "probability": "model_tree_34_probability",
+        "missing_left": "model_tree_34_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_35_left",
+        "right": "model_tree_35_right",
+        "feature": "model_tree_35_feature",
+        "threshold": "model_tree_35_threshold",
+        "probability": "model_tree_35_probability",
+        "missing_left": "model_tree_35_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_36_left",
+        "right": "model_tree_36_right",
+        "feature": "model_tree_36_feature",
+        "threshold": "model_tree_36_threshold",
+        "probability": "model_tree_36_probability",
+        "missing_left": "model_tree_36_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_37_left",
+        "right": "model_tree_37_right",
+        "feature": "model_tree_37_feature",
+        "threshold": "model_tree_37_threshold",
+        "probability": "model_tree_37_probability",
+        "missing_left": "model_tree_37_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_38_left",
+        "right": "model_tree_38_right",
+        "feature": "model_tree_38_feature",
+        "threshold": "model_tree_38_threshold",
+        "probability": "model_tree_38_probability",
+        "missing_left": "model_tree_38_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_39_left",
+        "right": "model_tree_39_right",
+        "feature": "model_tree_39_feature",
+        "threshold": "model_tree_39_threshold",
+        "probability": "model_tree_39_probability",
+        "missing_left": "model_tree_39_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_40_left",
+        "right": "model_tree_40_right",
+        "feature": "model_tree_40_feature",
+        "threshold": "model_tree_40_threshold",
+        "probability": "model_tree_40_probability",
+        "missing_left": "model_tree_40_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_41_left",
+        "right": "model_tree_41_right",
+        "feature": "model_tree_41_feature",
+        "threshold": "model_tree_41_threshold",
+        "probability": "model_tree_41_probability",
+        "missing_left": "model_tree_41_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_42_left",
+        "right": "model_tree_42_right",
+        "feature": "model_tree_42_feature",
+        "threshold": "model_tree_42_threshold",
+        "probability": "model_tree_42_probability",
+        "missing_left": "model_tree_42_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_43_left",
+        "right": "model_tree_43_right",
+        "feature": "model_tree_43_feature",
+        "threshold": "model_tree_43_threshold",
+        "probability": "model_tree_43_probability",
+        "missing_left": "model_tree_43_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_44_left",
+        "right": "model_tree_44_right",
+        "feature": "model_tree_44_feature",
+        "threshold": "model_tree_44_threshold",
+        "probability": "model_tree_44_probability",
+        "missing_left": "model_tree_44_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_45_left",
+        "right": "model_tree_45_right",
+        "feature": "model_tree_45_feature",
+        "threshold": "model_tree_45_threshold",
+        "probability": "model_tree_45_probability",
+        "missing_left": "model_tree_45_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_46_left",
+        "right": "model_tree_46_right",
+        "feature": "model_tree_46_feature",
+        "threshold": "model_tree_46_threshold",
+        "probability": "model_tree_46_probability",
+        "missing_left": "model_tree_46_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_47_left",
+        "right": "model_tree_47_right",
+        "feature": "model_tree_47_feature",
+        "threshold": "model_tree_47_threshold",
+        "probability": "model_tree_47_probability",
+        "missing_left": "model_tree_47_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_48_left",
+        "right": "model_tree_48_right",
+        "feature": "model_tree_48_feature",
+        "threshold": "model_tree_48_threshold",
+        "probability": "model_tree_48_probability",
+        "missing_left": "model_tree_48_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_49_left",
+        "right": "model_tree_49_right",
+        "feature": "model_tree_49_feature",
+        "threshold": "model_tree_49_threshold",
+        "probability": "model_tree_49_probability",
+        "missing_left": "model_tree_49_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_50_left",
+        "right": "model_tree_50_right",
+        "feature": "model_tree_50_feature",
+        "threshold": "model_tree_50_threshold",
+        "probability": "model_tree_50_probability",
+        "missing_left": "model_tree_50_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_51_left",
+        "right": "model_tree_51_right",
+        "feature": "model_tree_51_feature",
+        "threshold": "model_tree_51_threshold",
+        "probability": "model_tree_51_probability",
+        "missing_left": "model_tree_51_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_52_left",
+        "right": "model_tree_52_right",
+        "feature": "model_tree_52_feature",
+        "threshold": "model_tree_52_threshold",
+        "probability": "model_tree_52_probability",
+        "missing_left": "model_tree_52_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_53_left",
+        "right": "model_tree_53_right",
+        "feature": "model_tree_53_feature",
+        "threshold": "model_tree_53_threshold",
+        "probability": "model_tree_53_probability",
+        "missing_left": "model_tree_53_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_54_left",
+        "right": "model_tree_54_right",
+        "feature": "model_tree_54_feature",
+        "threshold": "model_tree_54_threshold",
+        "probability": "model_tree_54_probability",
+        "missing_left": "model_tree_54_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_55_left",
+        "right": "model_tree_55_right",
+        "feature": "model_tree_55_feature",
+        "threshold": "model_tree_55_threshold",
+        "probability": "model_tree_55_probability",
+        "missing_left": "model_tree_55_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_56_left",
+        "right": "model_tree_56_right",
+        "feature": "model_tree_56_feature",
+        "threshold": "model_tree_56_threshold",
+        "probability": "model_tree_56_probability",
+        "missing_left": "model_tree_56_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_57_left",
+        "right": "model_tree_57_right",
+        "feature": "model_tree_57_feature",
+        "threshold": "model_tree_57_threshold",
+        "probability": "model_tree_57_probability",
+        "missing_left": "model_tree_57_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_58_left",
+        "right": "model_tree_58_right",
+        "feature": "model_tree_58_feature",
+        "threshold": "model_tree_58_threshold",
+        "probability": "model_tree_58_probability",
+        "missing_left": "model_tree_58_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_59_left",
+        "right": "model_tree_59_right",
+        "feature": "model_tree_59_feature",
+        "threshold": "model_tree_59_threshold",
+        "probability": "model_tree_59_probability",
+        "missing_left": "model_tree_59_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_60_left",
+        "right": "model_tree_60_right",
+        "feature": "model_tree_60_feature",
+        "threshold": "model_tree_60_threshold",
+        "probability": "model_tree_60_probability",
+        "missing_left": "model_tree_60_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_61_left",
+        "right": "model_tree_61_right",
+        "feature": "model_tree_61_feature",
+        "threshold": "model_tree_61_threshold",
+        "probability": "model_tree_61_probability",
+        "missing_left": "model_tree_61_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_62_left",
+        "right": "model_tree_62_right",
+        "feature": "model_tree_62_feature",
+        "threshold": "model_tree_62_threshold",
+        "probability": "model_tree_62_probability",
+        "missing_left": "model_tree_62_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_63_left",
+        "right": "model_tree_63_right",
+        "feature": "model_tree_63_feature",
+        "threshold": "model_tree_63_threshold",
+        "probability": "model_tree_63_probability",
+        "missing_left": "model_tree_63_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_64_left",
+        "right": "model_tree_64_right",
+        "feature": "model_tree_64_feature",
+        "threshold": "model_tree_64_threshold",
+        "probability": "model_tree_64_probability",
+        "missing_left": "model_tree_64_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_65_left",
+        "right": "model_tree_65_right",
+        "feature": "model_tree_65_feature",
+        "threshold": "model_tree_65_threshold",
+        "probability": "model_tree_65_probability",
+        "missing_left": "model_tree_65_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_66_left",
+        "right": "model_tree_66_right",
+        "feature": "model_tree_66_feature",
+        "threshold": "model_tree_66_threshold",
+        "probability": "model_tree_66_probability",
+        "missing_left": "model_tree_66_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_67_left",
+        "right": "model_tree_67_right",
+        "feature": "model_tree_67_feature",
+        "threshold": "model_tree_67_threshold",
+        "probability": "model_tree_67_probability",
+        "missing_left": "model_tree_67_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_68_left",
+        "right": "model_tree_68_right",
+        "feature": "model_tree_68_feature",
+        "threshold": "model_tree_68_threshold",
+        "probability": "model_tree_68_probability",
+        "missing_left": "model_tree_68_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_69_left",
+        "right": "model_tree_69_right",
+        "feature": "model_tree_69_feature",
+        "threshold": "model_tree_69_threshold",
+        "probability": "model_tree_69_probability",
+        "missing_left": "model_tree_69_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_70_left",
+        "right": "model_tree_70_right",
+        "feature": "model_tree_70_feature",
+        "threshold": "model_tree_70_threshold",
+        "probability": "model_tree_70_probability",
+        "missing_left": "model_tree_70_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_71_left",
+        "right": "model_tree_71_right",
+        "feature": "model_tree_71_feature",
+        "threshold": "model_tree_71_threshold",
+        "probability": "model_tree_71_probability",
+        "missing_left": "model_tree_71_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_72_left",
+        "right": "model_tree_72_right",
+        "feature": "model_tree_72_feature",
+        "threshold": "model_tree_72_threshold",
+        "probability": "model_tree_72_probability",
+        "missing_left": "model_tree_72_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_73_left",
+        "right": "model_tree_73_right",
+        "feature": "model_tree_73_feature",
+        "threshold": "model_tree_73_threshold",
+        "probability": "model_tree_73_probability",
+        "missing_left": "model_tree_73_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_74_left",
+        "right": "model_tree_74_right",
+        "feature": "model_tree_74_feature",
+        "threshold": "model_tree_74_threshold",
+        "probability": "model_tree_74_probability",
+        "missing_left": "model_tree_74_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_75_left",
+        "right": "model_tree_75_right",
+        "feature": "model_tree_75_feature",
+        "threshold": "model_tree_75_threshold",
+        "probability": "model_tree_75_probability",
+        "missing_left": "model_tree_75_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_76_left",
+        "right": "model_tree_76_right",
+        "feature": "model_tree_76_feature",
+        "threshold": "model_tree_76_threshold",
+        "probability": "model_tree_76_probability",
+        "missing_left": "model_tree_76_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_77_left",
+        "right": "model_tree_77_right",
+        "feature": "model_tree_77_feature",
+        "threshold": "model_tree_77_threshold",
+        "probability": "model_tree_77_probability",
+        "missing_left": "model_tree_77_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_78_left",
+        "right": "model_tree_78_right",
+        "feature": "model_tree_78_feature",
+        "threshold": "model_tree_78_threshold",
+        "probability": "model_tree_78_probability",
+        "missing_left": "model_tree_78_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_79_left",
+        "right": "model_tree_79_right",
+        "feature": "model_tree_79_feature",
+        "threshold": "model_tree_79_threshold",
+        "probability": "model_tree_79_probability",
+        "missing_left": "model_tree_79_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_80_left",
+        "right": "model_tree_80_right",
+        "feature": "model_tree_80_feature",
+        "threshold": "model_tree_80_threshold",
+        "probability": "model_tree_80_probability",
+        "missing_left": "model_tree_80_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_81_left",
+        "right": "model_tree_81_right",
+        "feature": "model_tree_81_feature",
+        "threshold": "model_tree_81_threshold",
+        "probability": "model_tree_81_probability",
+        "missing_left": "model_tree_81_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_82_left",
+        "right": "model_tree_82_right",
+        "feature": "model_tree_82_feature",
+        "threshold": "model_tree_82_threshold",
+        "probability": "model_tree_82_probability",
+        "missing_left": "model_tree_82_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_83_left",
+        "right": "model_tree_83_right",
+        "feature": "model_tree_83_feature",
+        "threshold": "model_tree_83_threshold",
+        "probability": "model_tree_83_probability",
+        "missing_left": "model_tree_83_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_84_left",
+        "right": "model_tree_84_right",
+        "feature": "model_tree_84_feature",
+        "threshold": "model_tree_84_threshold",
+        "probability": "model_tree_84_probability",
+        "missing_left": "model_tree_84_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_85_left",
+        "right": "model_tree_85_right",
+        "feature": "model_tree_85_feature",
+        "threshold": "model_tree_85_threshold",
+        "probability": "model_tree_85_probability",
+        "missing_left": "model_tree_85_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_86_left",
+        "right": "model_tree_86_right",
+        "feature": "model_tree_86_feature",
+        "threshold": "model_tree_86_threshold",
+        "probability": "model_tree_86_probability",
+        "missing_left": "model_tree_86_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_87_left",
+        "right": "model_tree_87_right",
+        "feature": "model_tree_87_feature",
+        "threshold": "model_tree_87_threshold",
+        "probability": "model_tree_87_probability",
+        "missing_left": "model_tree_87_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_88_left",
+        "right": "model_tree_88_right",
+        "feature": "model_tree_88_feature",
+        "threshold": "model_tree_88_threshold",
+        "probability": "model_tree_88_probability",
+        "missing_left": "model_tree_88_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_89_left",
+        "right": "model_tree_89_right",
+        "feature": "model_tree_89_feature",
+        "threshold": "model_tree_89_threshold",
+        "probability": "model_tree_89_probability",
+        "missing_left": "model_tree_89_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_90_left",
+        "right": "model_tree_90_right",
+        "feature": "model_tree_90_feature",
+        "threshold": "model_tree_90_threshold",
+        "probability": "model_tree_90_probability",
+        "missing_left": "model_tree_90_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_91_left",
+        "right": "model_tree_91_right",
+        "feature": "model_tree_91_feature",
+        "threshold": "model_tree_91_threshold",
+        "probability": "model_tree_91_probability",
+        "missing_left": "model_tree_91_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_92_left",
+        "right": "model_tree_92_right",
+        "feature": "model_tree_92_feature",
+        "threshold": "model_tree_92_threshold",
+        "probability": "model_tree_92_probability",
+        "missing_left": "model_tree_92_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_93_left",
+        "right": "model_tree_93_right",
+        "feature": "model_tree_93_feature",
+        "threshold": "model_tree_93_threshold",
+        "probability": "model_tree_93_probability",
+        "missing_left": "model_tree_93_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_94_left",
+        "right": "model_tree_94_right",
+        "feature": "model_tree_94_feature",
+        "threshold": "model_tree_94_threshold",
+        "probability": "model_tree_94_probability",
+        "missing_left": "model_tree_94_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_95_left",
+        "right": "model_tree_95_right",
+        "feature": "model_tree_95_feature",
+        "threshold": "model_tree_95_threshold",
+        "probability": "model_tree_95_probability",
+        "missing_left": "model_tree_95_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_96_left",
+        "right": "model_tree_96_right",
+        "feature": "model_tree_96_feature",
+        "threshold": "model_tree_96_threshold",
+        "probability": "model_tree_96_probability",
+        "missing_left": "model_tree_96_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_97_left",
+        "right": "model_tree_97_right",
+        "feature": "model_tree_97_feature",
+        "threshold": "model_tree_97_threshold",
+        "probability": "model_tree_97_probability",
+        "missing_left": "model_tree_97_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_98_left",
+        "right": "model_tree_98_right",
+        "feature": "model_tree_98_feature",
+        "threshold": "model_tree_98_threshold",
+        "probability": "model_tree_98_probability",
+        "missing_left": "model_tree_98_missing_left"
+      },
+      {
+        "kind": "DecisionTreeClassifier",
+        "left": "model_tree_99_left",
+        "right": "model_tree_99_right",
+        "feature": "model_tree_99_feature",
+        "threshold": "model_tree_99_threshold",
+        "probability": "model_tree_99_probability",
+        "missing_left": "model_tree_99_missing_left"
+      }
+    ]
+  },
+  "source_sha256": "ec783dbcce59c378cac82a981825b2da83ff50ff19f9043c62e74a995bf8e62c",
+  "artifact_sha256": "a9210b2ab0e54ec680719675fe0e75eba57ebc7dee010a69ffb88ed5af57a334"
+}
