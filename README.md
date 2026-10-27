@@ -28,6 +28,7 @@ The four core evaluation datasets use `url` and `phishing` columns (`1` = phishi
 | Ebbu2017 | 36,400 | 37,175 | 73,575 |
 | PhishStorm | 48,009 | 47,902 | 95,911 |
 | PhishTank, external evaluation | 51,453 | 42,335 | 93,788 |
+| PhreshPhish, external evaluation | 89,686 | 76,541 | 166,227 |
 
 Files are in [`dataset`](dataset). PhishTank contains **93,788 URLs** for external evaluation. Phone resource measurements use a fixed **5,000-URL workload** (2,705 benign and 2,295 phishing URLs), retained with the inference bundles. See [the dataset notes](dataset/README.md).
 
