@@ -1,6 +1,6 @@
 # Datasets
 
-CSV columns are `url` and `phishing`, with phishing encoded as 1. The study uses PhishFusion, Ebbu2017, PhishStorm, and PhishTank. Labels and URLs are not rewritten to improve model results.
+CSV columns are `url` and `phishing`, with phishing encoded as 1. The core corpora are PhishFusion, Ebbu2017, PhishStorm, and PhishTank. Labels and URLs are not rewritten to improve model results.
 
 | File | Rows | Purpose |
 |---|---:|---|
@@ -22,3 +22,11 @@ Phone resource measurements use a fixed **5,000-URL workload**, containing 2,705
 `merged.csv` retains the first occurrence of each literal `(url, phishing)` pair across PhishFusion, Ebbu2017, and PhishStorm in that order. No case folding or URL rewriting is applied. Root domains use the offline ICANN Public Suffix List. PhishTank is excluded from this union.
 
 Treat URL strings as untrusted data. No workflow needs to visit the listed pages. Existing source attributions remain applicable; inclusion here does not grant ownership of third-party content or a right to redistribute it under an unrelated software license.
+
+## PhreshPhish external evaluation
+
+[`PhreshPhish/`](PhreshPhish) contains the pinned public URL metadata and upstream
+CC BY 4.0 attribution. The released test split has 168,060 rows; the eligible
+URL-disjoint population has 166,227 rows, and its source-domain-disjoint subset
+has 141,623. All models use identical eligibility masks. These populations do not
+change the PhishTank counts or the descriptive union above.

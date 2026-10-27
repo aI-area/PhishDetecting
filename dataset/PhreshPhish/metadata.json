@@ -1,0 +1,25 @@
+{
+  "dataset": "PhreshPhish",
+  "repository": "https://huggingface.co/datasets/phreshphish/phreshphish",
+  "version": "eca603e0ecd4f698f8d4d226c088659e72681239",
+  "license": "CC-BY-4.0",
+  "purpose": "Anti-phishing research",
+  "released_test": {
+    "benign": 91260,
+    "phishing": 76800,
+    "total": 168060
+  },
+  "url_disjoint": {
+    "benign": 89686,
+    "phishing": 76541,
+    "total": 166227
+  },
+  "source_domain_disjoint": {
+    "benign": 67421,
+    "phishing": 74202,
+    "total": 141623
+  },
+  "uncompressed_csv_sha256": "577a089060a6a94baf2d9e2651c2ea4fa1f942cd48b75e8249436d3b42acb04a",
+  "compressed_csv_sha256": "ecc1efc3a8207f91b3953546011da5f35bc17907e7ae96ada6beb6635efa6dd7",
+  "paper": "https://arxiv.org/abs/2507.10854"
+}
